@@ -22,7 +22,7 @@
                 echo '</div>';
             }
             if (isset($message) && $message=='update') {
-                echo '<div id="success-alert" class="alert alert-success alert-dismissible fade show" style="position: fixed; top: 100px; right: 0;" role="alert">';
+                echo '<div id="success-alert" class="alert alert-info alert-dismissible fade show" style="position: fixed; top: 100px; right: 0;" role="alert">';
                 echo '<span>整理しました。</span>';
                 echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
                 echo '<span aria-hidden="true">&times;</span>';
