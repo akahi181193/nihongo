@@ -12,7 +12,6 @@
                 echo '</button>';
                 echo '</div>';
             }
-
             if (isset($message) && $message=='del') {
                 echo '<div id="success-alert" class="alert alert-danger alert-dismissible fade show" style="position: fixed; top: 100px; right: 0;" role="alert">';
                 echo '<span>削除しました。</span>';
@@ -120,5 +119,38 @@
                 </div>
             </div>
         </div>
-
+             <!-- modal category add -->
+            
+             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">add category</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ route('storecategory') }}" method="POST">
+                        @method('POST')
+                        {{ csrf_field() }}  
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">name</label>
+                            <input type="text" name="name" class="form-control" id="recipient-name" required class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label" required class="form-control">description</label>
+                            <textarea class="form-control" id="message-text" name="description" ></textarea>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" >+</button>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+ 
+                </div>
+            </div>
+        </div>  
+        <!-- endmodal -->
 @endsection

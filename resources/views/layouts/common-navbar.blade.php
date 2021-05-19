@@ -19,13 +19,18 @@
                         echo "<a class=\"dropdown-item\" href=\"/home?category=$category->id\">$category->name</a>";
                     }
                     @endphp
-                    
                 </div>
+                
+            </li>
+            <li>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">+</button>
             </li>
         </ul>
     </div>
+    <!-- search form -->
     <form class="form-inline">
         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
+
 </nav>
