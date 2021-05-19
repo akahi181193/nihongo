@@ -32,7 +32,7 @@
                         echo "<td scope=\"row\">" . $memo->name . "</td>\n";
                         echo '<td>' . $memo->category->name . "</td>\n";
                         echo '<td>' . $memo->description . "</td>\n";
-                        echo '<td><a href="' . route('editMemo', ['id' => $memo->id]) . '" class="btn btn-outline-primary" >整理</a>';
+                        echo '<td><a href="' . route('editMemo', ['id' => $memo->id]) . '" class="btn btn-outline-primary" >編集</a>';
                         echo '<a href="' . route('deleteMemo', ['id' => $memo->id]) . ' " class="btn btn-outline-danger" >解消</a></td>';
                         echo "</tr>\n";
                     }
