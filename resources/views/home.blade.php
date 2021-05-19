@@ -3,33 +3,16 @@
 @section('content')
     <div class="container">
         @include('layouts.common-navbar')
-        @php
-            if (isset($message)&& $message=='add') {
-                echo '<div id="success-alert" class="alert alert-success alert-dismissible fade show" style="position: fixed; top: 100px; right: 0;" role="alert">';
-                echo '<span>追加しました。</span>';
-                echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
-                echo '<span aria-hidden="true">&times;</span>';
-                echo '</button>';
-                echo '</div>';
-            }
-            if (isset($message) && $message=='del') {
-                echo '<div id="success-alert" class="alert alert-danger alert-dismissible fade show" style="position: fixed; top: 100px; right: 0;" role="alert">';
-                echo '<span>削除しました。</span>';
-                echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
-                echo '<span aria-hidden="true">&times;</span>';
-                echo '</button>';
-                echo '</div>';
-            }
-            if (isset($message) && $message=='update') {
-                echo '<div id="success-alert" class="alert alert-info alert-dismissible fade show" style="position: fixed; top: 100px; right: 0;" role="alert">';
-                echo '<span>整理しました。</span>';
-                echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
-                echo '<span aria-hidden="true">&times;</span>';
-                echo '</button>';
-                echo '</div>';
-            }
-            
-        @endphp
+        @if (\Session::has('success'))
+            <div id="success-alert" class="alert alert-success alert-dismissible fade show"
+                style="position: fixed; top: 100px; right: 0;" role="alert">
+                <span>{!! \Session::get('success') !!}</span>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+
         <table class="table">
             <thead>
                 <tr>
@@ -49,8 +32,8 @@
                         echo "<td scope=\"row\">" . $memo->name . "</td>\n";
                         echo '<td>' . $memo->category->name . "</td>\n";
                         echo '<td>' . $memo->description . "</td>\n";
-                        echo '<td><a href="' . route('editMemo',['id' => $memo->id]) .'" class="btn btn-outline-primary" >整理</a>';
-                        echo '<a href="'.  route('deleteMemo',['id' => $memo->id]) .' " class="btn btn-outline-danger" >解消</a></td>';
+                        echo '<td><a href="' . route('editMemo', ['id' => $memo->id]) . '" class="btn btn-outline-primary" >編集</a>';
+                        echo '<a href="' . route('deleteMemo', ['id' => $memo->id]) . ' " class="btn btn-outline-danger" >解消</a></td>';
                         echo "</tr>\n";
                     }
                 @endphp
@@ -88,7 +71,7 @@
                                         <option value="">カテゴリを選択</option>
                                         @php
                                             foreach ($categories as $category) {
-                                                echo "<option value=\"" . $category->id  . "\">" . $category->name . '</option>';
+                                                echo "<option value=\"" . $category->id . "\">" . $category->name . '</option>';
                                             }
                                         @endphp
                                     </select>
@@ -119,9 +102,9 @@
                 </div>
             </div>
         </div>
-             <!-- modal category add -->
+        <!-- modal category add -->
             
-             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -153,4 +136,13 @@
             </div>
         </div>  
         <!-- endmodal -->
-@endsection
+
+    @endsection
+
+    @section('scripts')
+        <script>
+            setTimeout(() => {
+                $('#success-alert').remove();
+            }, 1000);
+        </script>
+    @endsection

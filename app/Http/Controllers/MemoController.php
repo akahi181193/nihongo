@@ -22,13 +22,7 @@ class MemoController extends Controller
 
         Memo::query()->create($payload);
 
-        // return redirect()->back()->withErrors(['add-da them']);
-
-        return redirect()->route('home', [
-            'category' => $request->category,
-            'page' => $request->page,
-            'message' => 'add'
-        ]);
+        return redirect()->back()->with('success', '追加しました');
     }
     public function delete(Request $request, $id)
     {
@@ -36,11 +30,7 @@ class MemoController extends Controller
 
         $del_Memo->delete();
 
-        return  redirect()->route('home', [
-            'category' => $request->category,
-            'page' => $request->page,
-            'message' => 'del'
-        ]);
+        return redirect()->back()->with('success', '削除しました');
     }
 
     public function edit ($id)
@@ -63,7 +53,6 @@ class MemoController extends Controller
         return redirect()->route('home', [
             'category' => $request->category,
             'page' => $request->page,
-            'message' => 'update'
-        ]);
+        ])->with('success', '編集しました');
     }
 }
