@@ -42,8 +42,6 @@ class HomeController extends Controller
 
         $memos = $memos->paginate(10);
 
-        $message = $request -> message;
-
-        return view('home', compact('categories', 'memos','message'));
+        return view('home', compact('categories', 'memos'));
     }
 }

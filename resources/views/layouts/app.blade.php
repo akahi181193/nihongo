@@ -66,7 +66,6 @@
 
         <main class="py-4">
             @yield('content')
-            @yield('content_edit')
         </main>
     </div>
     @yield('scripts')
