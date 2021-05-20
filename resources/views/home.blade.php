@@ -117,6 +117,7 @@
                     </div>
                     <div class="modal-body">
                         <form id="edit-add-form" action="/memos/update/{{isset($memo->id)?$memo->id:''}}" method="POST" id="edit_form">
+                        <!-- <form id="edit-add-form" action="route('updatememo', ['id' => $memo->id])" method="POST" id="edit_form"> -->
                             {{ csrf_field() }}
                             {{ method_field('patch') }}                
                             <div class="form-group row">
@@ -137,6 +138,9 @@
                                 <div class="col-md-12">
                                     <input type="text" value="{{isset($memo->name)?$memo->name:''}}"name="name" id="editname" required class="form-control">
                                 </div>
+                                <!-- <div class="col-md-12">
+                                    <input type="text" value=" $memo->name "name="name" id="editname" required class="form-control">
+                                </div> -->
                             </div>
 
                             <div class="form-group row">
@@ -144,6 +148,8 @@
                                 <div class="col-md-12">
                                     <textarea name="description" id="editdescription" rows="7" required
                                         class="form-control">{{isset($memo->description)?$memo->description:''}}</textarea>
+                                    <!-- <textarea name="description" id="editdescription" rows="7" required
+                                        class="form-control">$memo->description</textarea> -->
                                 </div>
                             </div>
 
@@ -195,8 +201,8 @@
     @endsection
 
     @section('scripts')
-    <!-- <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+    
+<!--     
     <script type="text/javascript">
     $(document).ready( function () {
      var table =$('#').DataTable();
@@ -216,7 +222,7 @@
         $('#editform').attr('action','/employee/'+data[0]);
         $('#editform').modal('show');
     });
-    } );
+    } ); -->
     
     </script> -->
         <script>
