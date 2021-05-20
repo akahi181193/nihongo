@@ -34,6 +34,7 @@ class HomeController extends Controller
             ->orderBy('created_at', 'desc')
             ->where('user_id', '=', Auth::user()->id)
             ->with('category');
+        $memos_all = Memo::query()->get();
 
         if (isset($request->category))
         {
@@ -42,6 +43,6 @@ class HomeController extends Controller
 
         $memos = $memos->paginate(10);
 
-        return view('home', compact('categories', 'memos'));
+        return view('home', compact('categories', 'memos','memos_all'));
     }
 }

@@ -45,11 +45,7 @@ class CateController extends Controller
 
         Category::query()->create($payload);
 
-        return redirect()->route('home', [
-            'category' => $request->category,
-            'page' => $request->page,
-            'message' => 'add'
-        ]);
+        return redirect()->back()->with('success', 'カテゴリを追加しました');
     }
 
 

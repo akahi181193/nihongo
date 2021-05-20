@@ -18,6 +18,7 @@
                     foreach($categories as $category) {
                         echo "<a class=\"dropdown-item\" href=\"/home?category=$category->id\">$category->name</a>";
                     }
+                    
                     @endphp
                 </div>
                 
