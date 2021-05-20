@@ -51,7 +51,7 @@
                             @endif
                             <div class="">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
+                                    {{ __('Login') }} 
                                 </button>
                             </div>
                         </div>
