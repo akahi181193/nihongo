@@ -1,8 +1,8 @@
 @extends('layouts.app')
-@section('content_edit')
+@section('content')
 <div class="container-fluid">
 <div class="col-md-3 offset-md-4">
-    <form method="post" action="{{ route('updatmemo',['id' => $edit_memo->id]) }}">
+    <form method="post" action="{{ route('updatememo',['id' => $edit_memo->id]) }}">
         @method('patch')
         @csrf
         <div class="col-md-12">
@@ -24,7 +24,7 @@
         <div class="col-md-12">
             <label for="description" class="form-label">内容</label><br>
             <textarea cols="50" rows="5" name="description"> {{ $edit_memo->description }}</textarea>
-            <button type="submit" class="btn btn-outline-primary" >整理</button>
+            <button type="submit" class="btn btn-outline-primary" >編集</button>
         </div>
     </form>
 </div>
