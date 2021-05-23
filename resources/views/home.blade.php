@@ -32,8 +32,7 @@
                         echo "<td scope=\"row\">" . $memo->name . "</td>\n";
                         echo '<td>' . $memo->category->name . "</td>\n";
                         echo '<td>' . $memo->description . "</td>\n";
-                        echo '<td><a href="' . route('editMemo', ['id' => $memo->id]) . '" class="btn btn-outline-primary" data-toggle="modal"
-                            data-target="#edit-memo-modal" >編集</a>';
+                        echo '<td><a href="' . route('editMemo', ['id' => $memo->id]) . '" class="btn btn-outline-primary" >編集</a>';
                         echo '<a href="' . route('deleteMemo', ['id' => $memo->id]) . ' " class="btn btn-outline-danger" >解消</a></td>';
                         echo "</tr>\n";
                     }
@@ -138,9 +137,6 @@
                                 <div class="col-md-12">
                                     <input type="text" value="{{isset($memo->name)?$memo->name:''}}"name="name" id="editname" required class="form-control">
                                 </div>
-                                <!-- <div class="col-md-12">
-                                    <input type="text" value=" $memo->name "name="name" id="editname" required class="form-control">
-                                </div> -->
                             </div>
 
                             <div class="form-group row">
@@ -148,8 +144,6 @@
                                 <div class="col-md-12">
                                     <textarea name="description" id="editdescription" rows="7" required
                                         class="form-control">{{isset($memo->description)?$memo->description:''}}</textarea>
-                                    <!-- <textarea name="description" id="editdescription" rows="7" required
-                                        class="form-control">$memo->description</textarea> -->
                                 </div>
                             </div>
 

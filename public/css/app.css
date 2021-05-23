@@ -75,7 +75,8 @@ body {
     text-align: left;
     background-image: url(../images/background.png);
     background-repeat: no-repeat;
-    background-size: 1536px 745px;
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {

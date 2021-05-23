@@ -12,7 +12,7 @@
         <div class="col-md-12">
             <label for="formGroupExampleInput" class="form-label">カテゴリ</label>
             <br>
-            <select name="category_id" id="category-id" class="form-select" aria-label="Default select example" required>
+            <select name="category_id" id="category-id" class="form-select" aria-label="Default select example" >
             <option value="">カテゴリを選択</option>
             @php
             foreach ($categories as $category) {
