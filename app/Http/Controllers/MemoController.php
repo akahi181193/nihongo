@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Memo;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -45,14 +46,22 @@ class MemoController extends Controller
     }
     public function update(Request $request, $id)
     {
-        $update = Memo::find($id);
-        $update->name = $request->name;
-        $update->category_id = $request->category_id;
-        $update->description = $request->description;
-        $update->save();
-        return redirect()->route('home', [
-            'category' => $request->category,
-            'page' => $request->page,
-        ])->with('success', '編集しました');
+        $row = Memo::find($id);
+        if ($row) {
+            $row->name = $request->name;
+            $row->category_id = $request->category_id;
+            $row->description = $request->description;
+            $row->save();
+           
+            return response()->json(['message' => '編集しました。'])->status(JsonResponse::HTTP_ACCEPTED);
+        }
+
+        return response()->json(['error_message' => '存在しない'])->status(JsonResponse::HTTP_NOT_FOUND);
+    }
+
+    public function getMemoById(Request $request, $id) {
+        $memo = Memo::find($id);
+
+        return response()->json($memo);
     }
 }
