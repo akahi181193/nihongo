@@ -4,7 +4,7 @@
     <div class="container">
         @include('layouts.common-navbar')
         @if (\Session::has('success'))
-            <div id="success-alert" class="alert alert-success alert-dismissible fade show"
+            <div class="success-alert alert alert-success alert-dismissible fade show"
                 style="position: fixed; top: 100px; right: 0;" role="alert">
                 <span>{!! \Session::get('success') !!}</span>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -26,17 +26,20 @@
                 </tr>
             </thead>
             <tbody id="table-body">
-                @php
-                    foreach ($memos as $key => $memo) {
-                        echo "<tr>\n";
-                        echo "<td scope=\"row\">" . $memo->name . "</td>\n";
-                        echo '<td>' . $memo->category->name . "</td>\n";
-                        echo '<td>' . $memo->description . "</td>\n";
-                        echo '<td><a href="' . route('editMemo', ['id' => $memo->id]) . '" class="btn btn-outline-primary" >編集</a>';
-                        echo '<a href="' . route('deleteMemo', ['id' => $memo->id]) . ' " class="btn btn-outline-danger" >解消</a></td>';
-                        echo "</tr>\n";
-                    }
-                @endphp
+                @foreach ($memos as $memo)
+                    <tr>
+                        <td scope="row">{{ $memo->name }}</td>
+                        <td>{{ $memo->category->name }}</td>
+                        <td>{{ $memo->description }}</td>
+                        <td>
+                            <a onclick="onEditButton({{ $memo->id }})" class="btn btn-outline-primary"
+                                data-toggle="modal" data-target="#edit-memo-modal">
+                                編集
+                            </a>
+                            <a href="/memos/delete/{{$memo->id}}" class="btn btn-outline-danger">削除</a>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
             <tfoot>
                 <tr>
@@ -49,7 +52,7 @@
             </tfoot>
         </table>
 
-        <!-- Modal 1-->
+        <!-- Modal add-->
         <div class="modal fade" id="add-memo-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -102,8 +105,9 @@
                 </div>
             </div>
         </div>
-        <!-- end modal 1 -->
-        <!-- start edit Modal 2 -->
+        <!-- end modal add -->
+
+        <!-- start edit Modal -->
         <div class="modal fade" id="edit-memo-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -115,19 +119,14 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form id="edit-add-form" action="/memos/update/{{isset($memo->id)?$memo->id:''}}" method="POST" id="edit_form">
-                        <!-- <form id="edit-add-form" action="route('updatememo', ['id' => $memo->id])" method="POST" id="edit_form"> -->
-                            {{ csrf_field() }}
-                            {{ method_field('patch') }}                
+                        <form id="edit-add-form">
                             <div class="form-group row">
                                 <label for="category-id" class="col-md-4 col-form-label">{{ __('カテゴリ') }}</label>
                                 <div class="col-md-12">
-                                    <select name="category_id" id="category-id" class="form-control" required>
-                                        @php
-                                            foreach ($categories as $category) {
-                                                echo "<option value=\"" . $category->id . "\">" . $category->name . '</option>';
-                                            }
-                                        @endphp
+                                    <select name="category_id" id="edit-category-id" class="form-control" required>
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -135,15 +134,15 @@
                             <div class="form-group row">
                                 <label for="name" class="col-md-4 col-form-label">{{ __('タイトル') }}</label>
                                 <div class="col-md-12">
-                                    <input type="text" value="{{isset($memo->name)?$memo->name:''}}"name="name" id="editname" required class="form-control">
+                                    <input type="text" name="name" id="edit-name" required class="form-control">
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label for="description" class="col-md-4 col-form-label">{{ __('内容') }}</label>
                                 <div class="col-md-12">
-                                    <textarea name="description" id="editdescription" rows="7" required
-                                        class="form-control">{{isset($memo->description)?$memo->description:''}}</textarea>
+                                    <textarea name="description" id="edit-description" rows="7" required
+                                        class="form-control"></textarea>
                                 </div>
                             </div>
 
@@ -156,72 +155,120 @@
                 </div>
             </div>
         </div>
-        <!-- end edit modal 2 -->
+        <!-- end edit modal-->
+
         <!-- modal category add -->
-            
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">add category</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                            <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <form action="{{ route('storecategory') }}" method="POST">
-                        @method('POST')
-                        {{ csrf_field() }}  
-                        <div class="form-group">
-                            <label for="recipient-name" class="col-form-label">name</label>
-                            <input type="text" name="name" class="form-control" id="recipient-name" required class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="message-text" class="col-form-label" required class="form-control">description</label>
-                            <textarea class="form-control" id="message-text" name="description" ></textarea>
-                            <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary" >+</button>
+                            @method('POST')
+                            {{ csrf_field() }}
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">name</label>
+                                <input type="text" name="name" class="form-control" id="recipient-name" required
+                                    class="form-control">
                             </div>
-                        </div>
+                            <div class="form-group">
+                                <label for="message-text" class="col-form-label" required
+                                    class="form-control">description</label>
+                                <textarea class="form-control" id="message-text" name="description"></textarea>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">+</button>
+                                </div>
+                            </div>
                         </form>
                     </div>
- 
+
                 </div>
             </div>
-        </div>  
+        </div>
         <!-- endmodal -->
 
     @endsection
 
     @section('scripts')
-    
-<!--     
-    <script type="text/javascript">
-    $(document).ready( function () {
-     var table =$('#').DataTable();
-    //  start edit record
-    table.on('click','edit',function(){
-        $tr =$(this).closest('tr');
-        if ($($tr).hasClass('child')) {
-            $tr = $tr.prev('.parent');
-        }
-        var data = table.row($tr).data();
-        console.log(data);
-        $('').val(data[1]);
-        $('').val(data[2]);
-        $('').val(data[3]);
-        $('').val(data[4]);
+        <!-- handle alert queue -->
+        <script>
+            window.onload = function() {
+                const alertQueue = localStorage.getItem('alert-queue');
+                if (alertQueue) {
+                    const alertEl = document.createElement('div');
+                    $(alertEl).addClass('success-alert alert alert-success alert-dismissible fade show');
+                    $(alertEl).attr('style', 'position: fixed; top: 100px; right: 0; z-index: 10;');
+                    $(alertEl).attr('role', 'alert');
+                    $(alertEl).html(
+                        `<span>${alertQueue}</span> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>`
+                        );
 
-        $('#editform').attr('action','/employee/'+data[0]);
-        $('#editform').modal('show');
-    });
-    } ); -->
-    
-    </script> -->
+                    $('.container')[0].append(alertEl);
+
+                    localStorage.setItem('alert-queue', '');
+                }
+            }
+
+        </script>
+
         <script>
             setTimeout(() => {
-                $('#success-alert').remove();
+                $('.success-alert').remove();
             }, 1000);
+
+        </script>
+
+        <!-- edit scripts -->
+        <script>
+            function onEditButton(id) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax('/memos/' + id, {
+                    success: (res) => {
+                        $('#edit-category-id').val(res.category_id);
+                        $('#edit-name').val(res.name);
+                        $('#edit-description').val(res.description);
+                    },
+                    error: (error) => {
+
+                    }
+                });
+
+                $('#edit-add-form').on('submit', (event) => {
+                    event.preventDefault();
+
+                    const formValue = $('#edit-add-form').serializeArray();
+                    const payload = formValue.reduce((s, v) => {
+                        s[v.name] = v.value;
+                        return s;
+                    }, {});
+
+                    $.ajax('/memos/' + id, {
+                        method: 'patch',
+                        data: payload,
+                        success: function() {
+                            $('#edit-memo-modal').modal('toggle');
+                            localStorage.setItem('alert-queue', '編集しました。');
+                            location.reload();
+                        },
+                        error: (error) => {
+                            console.log(error);
+                        }
+                    });
+                });
+            }
+
         </script>
     @endsection
