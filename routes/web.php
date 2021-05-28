@@ -21,13 +21,12 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::post('/memos', [\App\Http\Controllers\MemoController::class, 'store'])->name('storeMemo');
     Route::get('/memos/edit/{id}', [\App\Http\Controllers\MemoController::class, 'edit'])->name('editMemo');
     Route::get('/memos/delete/{id}', [\App\Http\Controllers\MemoController::class, 'delete'])->name('deleteMemo');
-    Route::POST('/category', [\App\Http\Controllers\CateController::class, 'store'])->name('storecategory');
+    Route::post('/category', [\App\Http\Controllers\HomeController::class, 'store'])->name('storecategory');
 
-    
     // API
     Route::get('/memos/{id}', [\App\Http\Controllers\MemoController::class, 'getMemoById'])->name('getMemoById');
     Route::patch('/memos/{id}', [\App\Http\Controllers\MemoController::class, 'update'])->name('updatememo');
