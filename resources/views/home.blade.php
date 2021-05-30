@@ -19,6 +19,7 @@
                     <th scope="col">タイトル</th>
                     <th scope="col">カテゴリ</th>
                     <th scope="col">内容</th>
+                    <th scope="col">写真</th>
                     <th scope="col">
                         <a href="/memos/add" class="btn btn-outline-primary" data-toggle="modal"
                             data-target="#add-memo-modal">追加</a>
@@ -27,10 +28,11 @@
             </thead>
             <tbody id="table-body">
                 @foreach ($memos as $memo)
-                    <tr>
+                    <tr >
                         <td scope="row">{{ $memo->name }}</td>
                         <td>{{ $memo->category->name }}</td>
                         <td>{{ $memo->description }}</td>
+                        <td><img width="responssive" height="50px" src="{{asset('storage/images/memos/'.$memo->images)}}" enctype="multipart/form-data"></td>
                         <td>
                             <a onclick="onEditButton({{ $memo->id }})" class="btn btn-outline-primary"
                                 data-toggle="modal" data-target="#edit-memo-modal">
@@ -64,7 +66,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form id="memo-add-form" action="{{ route('storeMemo') }}" method="POST">
+                        <form id="memo-add-form" action="{{ route('storeMemo') }}" method="POST" enctype="multipart/form-data">
                             @csrf
 
                             <div class="form-group row">
@@ -94,6 +96,10 @@
                                     <textarea name="description" id="description" rows="7" required
                                         class="form-control"></textarea>
                                 </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="images" class="col-md-4 col-form-label">{{ __('写真')}}</label>
+                                <input type="file" name="images" id="images" required class="form-control">
                             </div>
 
                             <div class="row justify-content-center">

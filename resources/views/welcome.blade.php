@@ -12,7 +12,7 @@
 	<link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
 	<script src="{{ asset('js/all.min.js')}}" defer></script>
 	<script src="{{ asset('js/loginapp.js') }}" defer></script>
-	<title>Login</title>
+	<title>Welcome to 日本語メモ帳</title>
 </head>
 
 <body>
@@ -54,15 +54,10 @@
 				</span>
 				@enderror
 
-				<div class="form-group row">
-					<label for="password-confirm"
-						class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-					<div class="col-md-6">
-						<input id="password-confirm" type="password" class="form-control" name="password_confirmation"
-							required autocomplete="new-password">
-					</div>
-				</div>
+				
+				<input id="password-confirm" type="password" placeholder="Confirm Password" class="form-control" name="password_confirmation"
+					required autocomplete="new-password">
+				
 
 				<button type="submit">Sign Up</button>
 			</form>

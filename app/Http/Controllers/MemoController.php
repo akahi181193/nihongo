@@ -21,10 +21,18 @@ class MemoController extends Controller
         unset($payload['_token']);
         $payload['user_id'] = Auth::user()->id;
 
+        if ($request->hasFile('images')) {
+            $destination_path = 'public/images/memos';
+            $image = $request->file('images');
+            $image_name = $image->getClientOriginalName();
+            $path = $request->file('images')->storeAs($destination_path, $image_name);
+            $payload['images'] = $image_name;
+        }
         Memo::query()->create($payload);
 
         return redirect()->back()->with('success', '追加しました');
     }
+
     public function delete(Request $request, $id)
     {
         $del_Memo = Memo::find($id);
