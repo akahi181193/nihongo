@@ -39,7 +39,7 @@ class MemoController extends Controller
 
         $del_Memo->delete();
 
-        return redirect()->back()->with('success', '削除しました','alert','danger');
+        return redirect()->back()->with('success', '削除しました');
     }
 
     public function edit ($id)
@@ -71,5 +71,15 @@ class MemoController extends Controller
         $memo = Memo::find($id);
 
         return response()->json($memo);
+    }
+    public function search(Request $request)
+    {
+        $search_text = $_GET['query'];
+        $categories = Category::query()
+            ->where('user_id', '=', Auth::user()->id)
+            ->get();
+        $memos = Memo::where('name', 'LIKE', '%' . $search_text . '%')->with('category')->get();
+
+        return view('search', compact('memos', 'categories'));
     }
 }

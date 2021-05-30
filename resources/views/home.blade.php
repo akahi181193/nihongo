@@ -2,7 +2,14 @@
 
 @section('content')
     <div class="container">
-        @include('layouts.common-navbar')
+        {{-- @include('layouts.common-navbar') --}}
+
+        <form class="form-inline w-100 justify-content-center" method="GET" action="{{ url('/home') }}">
+            <input class="form-control mr-sm-2" value="{{ request()->get('keyword') }}" type="text" name="keyword"
+                placeholder="タイトル検索" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+
         @if (\Session::has('success'))
             <div class="success-alert alert alert-success alert-dismissible fade show"
                 style="position: fixed; top: 100px; right: 0;" role="alert">
@@ -13,46 +20,70 @@
             </div>
         @endif
 
-        <table class="table" id="">
-            <thead>
-                <tr>
-                    <th scope="col">タイトル</th>
-                    <th scope="col">カテゴリ</th>
-                    <th scope="col">内容</th>
-                    <th scope="col">写真</th>
-                    <th scope="col">
-                        <a href="/memos/add" class="btn btn-outline-primary" data-toggle="modal"
-                            data-target="#add-memo-modal">追加</a>
-                    </th>
-                </tr>
-            </thead>
-            <tbody id="table-body">
-                @foreach ($memos as $memo)
-                    <tr >
-                        <td scope="row">{{ $memo->name }}</td>
-                        <td>{{ $memo->category->name }}</td>
-                        <td>{{ $memo->description }}</td>
-                        <td><img width="responssive" height="50px" src="{{asset('storage/images/memos/'.$memo->images)}}" enctype="multipart/form-data"></td>
-                        <td>
-                            <a onclick="onEditButton({{ $memo->id }})" class="btn btn-outline-primary"
-                                data-toggle="modal" data-target="#edit-memo-modal">
-                                編集
-                            </a>
-                            <a href="/memos/delete/{{$memo->id}}" class="btn btn-outline-danger">削除</a>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="4">
-                        <div class="row justify-content-center">
-                            {{ $memos->onEachSide(5)->links() }}
-                        </div>
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
+        <div class="row mt-3">
+            <div class="categories col-md-3">
+                <div class="row justify-content-around align-items-center">
+                    <b>Categories</b>
+                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                        data-target="#exampleModal">Add</button>
+                </div>
+                <style>
+                    #list-category {
+                        height: calc(100vh - 55px - 37px - 5rem - 37px);
+                        overflow-y: auto;
+                    }
+                </style>
+                <div id="list-category" class="list-group mt-3">
+                    @foreach ($categories as $item)
+                        <a class="list-group-item list-group-item-action {{ request()->get('category') == $item->id ? 'active' : '' }}"
+                            href="/home?category={{ $item->id }}">{{ $item->name }}</a>
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="memos col-md-9">
+                <table class="table table-striped" id="">
+                    <thead>
+                        <tr>
+                            <th scope="col">タイトル</th>
+                            <th scope="col">カテゴリ</th>
+                            <th scope="col">内容</th>
+                            <th scope="col">
+                            
+                                <a href="/memos/add" class="btn btn-outline-primary" data-toggle="modal"
+                                    data-target="#add-memo-modal">追加</a>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                        @foreach ($memos as $memo)
+                            <tr>
+                                <td scope="row">{{ $memo->name }}</td>
+                                <td>{{ $memo->category->name }}</td>
+                                <td>{{ $memo->description }}</td>
+                                <td><img width="responssive" height="50px" src="{{asset('storage/images/memos/'.$memo->images)}}" enctype="multipart/form-data"></td>
+                                <td>
+                                    <a onclick="onEditButton({{ $memo->id }})" class="btn btn-outline-primary"
+                                        data-toggle="modal" data-target="#edit-memo-modal">
+                                        編集
+                                    </a>
+                                    <a href="/memos/delete/{{ $memo->id }}" class="btn btn-outline-danger">削除</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4">
+                                <div class="row justify-content-center">
+                                    {{ $memos->onEachSide(5)->links() }}
+                                </div>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
 
         <!-- Modal add-->
         <div class="modal fade" id="add-memo-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -138,7 +169,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="name" class="col-md-4 col-form-label">{{ __('タイトル') }}</label>
+                                <label for="name" class="col-md-4 col-form-label">{{ 'タイトル' }}</label>
                                 <div class="col-md-12">
                                     <input type="text" name="name" id="edit-name" required class="form-control">
                                 </div>
@@ -153,7 +184,7 @@
                             </div>
 
                             <div class="row justify-content-center">
-                                <button style="min-width: 100px" type="submit" class="btn btn-primary">update</button>
+                                <button style="min-width: 100px" type="submit" class="btn btn-primary">編集</button>
                             </div>
                         </form>
 
@@ -190,7 +221,7 @@
                                 <textarea class="form-control" id="message-text" name="description"></textarea>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">+</button>
+                                    <button type="submit" class="btn btn-primary">Add</button>
                                 </div>
                             </div>
                         </form>
@@ -215,7 +246,7 @@
                     $(alertEl).attr('role', 'alert');
                     $(alertEl).html(
                         `<span>${alertQueue}</span> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>`
-                        );
+                    );
 
                     $('.container')[0].append(alertEl);
 
@@ -240,6 +271,7 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
+                //res biếm callback function
 
                 $.ajax('/memos/' + id, {
                     success: (res) => {
@@ -263,7 +295,7 @@
 
                     $.ajax('/memos/' + id, {
                         method: 'patch',
-                        data: payload,
+                        data: payload, //update data
                         success: function() {
                             $('#edit-memo-modal').modal('toggle');
                             localStorage.setItem('alert-queue', '編集しました。');

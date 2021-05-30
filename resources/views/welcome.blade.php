@@ -12,38 +12,46 @@
 	<link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
 	<script src="{{ asset('js/all.min.js')}}" defer></script>
 	<script src="{{ asset('js/loginapp.js') }}" defer></script>
+<<<<<<< HEAD
 	<title>Welcome to 日本語メモ帳</title>
+=======
+	<title>NihongoMemo</title>
+>>>>>>> faa5443ddd9d2161815b5443ccf55757814661d0
 </head>
+
+{{-- Sign Up Form --}}
 
 <body>
 	<div class="container" id="container">
 		<div class="form-container sign-up-container">
 			<form action="{{ route('register') }}" method="POST">
-				@csrf
+			@csrf
 
-				<h1>Create Account</h1>
-				<div class="social-container">
-					<a href="#" class="social"><i class="fab fa-facebook"></i></a>
-					<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-				</div>
-				<span>or use your email for registration</span>
+			<input id="name" type="text" placeholder="Name" class="form-control @error('name') is-invalid @enderror"
+				name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+			@error('name')
+			<span class="invalid-feedback" role="alert">
+				<strong>{{ $message }}</strong>
+			</span>
+			@enderror
 
-				<input id="name" type="text" placeholder="Name" class="form-control @error('name') is-invalid @enderror"
-					name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-				@error('name')
-				<span class="invalid-feedback" role="alert">
-					<strong>{{ $message }}</strong>
-				</span>
-				@enderror
+			<input id="email" type="email" placeholder="Email"
+				class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}"
+				required autocomplete="email">
+			@error('email')
+			<span class="invalid-feedback" role="alert">
+				<strong>{{ $message }}</strong>
+			</span>
+			@enderror
 
-				<input id="email" type="email" placeholder="Email"
-					class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}"
-					required autocomplete="email">
-				@error('email')
-				<span class="invalid-feedback" role="alert">
-					<strong>{{ $message }}</strong>
-				</span>
-				@enderror
+			<input id="password" type="password" placeholder="Password"
+				class="form-control @error('password') is-invalid @enderror" name="password" required
+				autocomplete="new-password">
+			@error('password')
+			<span class="invalid-feedback" role="alert">
+				<strong>{{ $message }}</strong>
+			</span>
+			@enderror
 
 				<input id="password" type="password" placeholder="Password"
 					class="form-control @error('password') is-invalid @enderror" name="password" required
@@ -59,19 +67,17 @@
 					required autocomplete="new-password">
 				
 
-				<button type="submit">Sign Up</button>
-			</form>
-		</div>
-		<div class="form-container sign-in-container">
-			<form action="{{ route('login') }}" class="mt-4" method="post">
-				@csrf
+			<button type="submit">Sign Up</button>
+		</form>
+	</div>
+
+	{{-- Sign In Form --}}
+
+	<div class="form-container sign-in-container">
+		<form action="{{ route('login') }}" class="mt-4" method="post">
+			@csrf
 
 				<h1>Sign in</h1>
-				<div class="social-container">
-					<a href="#" class="social"><i class="fab fa-facebook"></i></a>
-					<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-				</div>
-				<span>or use your account</span>
 				<input type="email" placeholder="Email" class="form-control @error('email') is-invalid @enderror"
 					name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 				@error('email')
@@ -101,13 +107,13 @@
 		<div class="overlay-container">
 			<div class="overlay">
 				<div class="overlay-panel overlay-left">
-					<h1>Welcome Back!</h1>
-					<p>To keep connected with us please login with your personal info</p>
+					<h1>NihongoMemo</h1>
+					<p>Start to keep your Japanese's memos. Simply just sign up a new account in seconds</p>
 					<button class="ghost" id="signIn">Sign In</button>
 				</div>
 				<div class="overlay-panel overlay-right">
-					<h1>Hello, Friend!</h1>
-					<p>Enter your personal details and start journey with us</p>
+					<h1>NihongoMemo</h1>
+					<p>The simplest way to keep your Japanese's memos in everywhere</p>
 					<button class="ghost" id="signUp">Sign Up</button>
 				</div>
 			</div>

@@ -9,7 +9,7 @@
                     <h5 class="mb-0">Home</h5>
                 </a>
             </li>
-            <li class="nav-item dropdown {{ Request::is('categories') ? 'active' : '' }}">
+            <li class="nav-item {{ Request::is('categories') ? 'active' : '' }}">
                 <a style="display: flex; align-items: center;" class="nav-link dropdown-toggle" href="/categories" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <h5 class="mb-0">Categories</h5>
                 </a>
@@ -28,10 +28,10 @@
             </li>
         </ul>
     </div>
-    <!-- search form -->
-    <form class="form-inline">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    <!-- start search form -->
+    <form class="form-inline" method="GET" action="{{ url('/home')}}">
+        <input class="form-control mr-sm-2" value="{{ request()->get('keyword') }}" type="text" name="keyword" placeholder="タイトル検索" aria-label="Search">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
-
+    <!-- end search form -->
 </nav>
