@@ -14,6 +14,7 @@ class Memo extends Model
         'id',
         'user_id',
         'name',
+        'images',
         'description',
     ];
 

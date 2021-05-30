@@ -12,7 +12,11 @@
 	<link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
 	<script src="{{ asset('js/all.min.js')}}" defer></script>
 	<script src="{{ asset('js/loginapp.js') }}" defer></script>
+<<<<<<< HEAD
+	<title>Welcome to 日本語メモ帳</title>
+=======
 	<title>NihongoMemo</title>
+>>>>>>> faa5443ddd9d2161815b5443ccf55757814661d0
 </head>
 
 {{-- Sign Up Form --}}
@@ -49,15 +53,19 @@
 			</span>
 			@enderror
 
-			<div class="form-group row">
-				<label for="password-confirm"
-					class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+				<input id="password" type="password" placeholder="Password"
+					class="form-control @error('password') is-invalid @enderror" name="password" required
+					autocomplete="new-password">
+				@error('password')
+				<span class="invalid-feedback" role="alert">
+					<strong>{{ $message }}</strong>
+				</span>
+				@enderror
 
-				<div class="col-md-6">
-					<input id="password-confirm" type="password" placeholder="Confirm Password"
-						required autocomplete="new-password">
-				</div>
-			</div>
+				
+				<input id="password-confirm" type="password" placeholder="Confirm Password" class="form-control" name="password_confirmation"
+					required autocomplete="new-password">
+				
 
 			<button type="submit">Sign Up</button>
 		</form>

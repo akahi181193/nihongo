@@ -74,14 +74,6 @@ body {
     color: #212529;
     text-align: left;
     background-image: url(../images/background.png);
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-size: cover;
-<<<<<<< HEAD
-    background-attachment: fixed;
-=======
-    background-position: center;
->>>>>>> refs/remotes/origin/main
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
