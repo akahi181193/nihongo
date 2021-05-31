@@ -72,14 +72,4 @@ class MemoController extends Controller
 
         return response()->json($memo);
     }
-    public function search(Request $request)
-    {
-        $search_text = $_GET['query'];
-        $categories = Category::query()
-            ->where('user_id', '=', Auth::user()->id)
-            ->get();
-        $memos = Memo::where('name', 'LIKE', '%' . $search_text . '%')->with('category')->get();
-
-        return view('search', compact('memos', 'categories'));
-    }
 }
