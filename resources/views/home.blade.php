@@ -23,9 +23,8 @@
         <div class="row mt-3">
             <div class="categories col-md-3">
                 <div class="row justify-content-around align-items-center">
-                    <b>Categories</b>
-                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                        data-target="#exampleModal">Add</button>
+                    <button type="button" class="btn btn-primary btn-block" data-toggle="modal"
+                        data-target="#category-modal">Add Category +</button>
                 </div>
                 <style>
                     #list-category {
@@ -48,6 +47,7 @@
                             <th scope="col">タイトル</th>
                             <th scope="col">カテゴリ</th>
                             <th scope="col">内容</th>
+                            <th scope="col">写真</th>
                             <th scope="col">
                             
                                 <a href="/memos/add" class="btn btn-outline-primary" data-toggle="modal"
@@ -63,11 +63,11 @@
                                 <td>{{ $memo->description }}</td>
                                 <td><img width="responssive" height="50px" src="{{asset('storage/images/memos/'.$memo->images)}}" enctype="multipart/form-data"></td>
                                 <td>
-                                    <a onclick="onEditButton({{ $memo->id }})" class="btn btn-outline-primary"
+                                    <a onclick="onEditButton({{ $memo->id }})" class="btn btn-primary"
                                         data-toggle="modal" data-target="#edit-memo-modal">
                                         編集
                                     </a>
-                                    <a href="/memos/delete/{{ $memo->id }}" class="btn btn-outline-danger">削除</a>
+                                    <a href="/memos/delete/{{ $memo->id }}" class="btn btn-danger">削除</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -86,12 +86,12 @@
         </div>
 
         <!-- Modal add-->
-        <div class="modal fade" id="add-memo-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        <div class="modal fade" id="add-memo-modal" tabindex="-1" role="dialog" aria-labelledby="category-modalLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">メモ新規登録</h5>
+                        <h5 class="modal-title" id="category-modalLabel">メモ新規登録</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -124,7 +124,7 @@
                             <div class="form-group row">
                                 <label for="description" class="col-md-4 col-form-label">{{ __('内容') }}</label>
                                 <div class="col-md-12">
-                                    <textarea name="description" id="description" rows="7" required
+                                    <textarea name="description" id="description" rows="3" required
                                         class="form-control"></textarea>
                                 </div>
                             </div>
@@ -145,12 +145,12 @@
         <!-- end modal add -->
 
         <!-- start edit Modal -->
-        <div class="modal fade" id="edit-memo-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        <div class="modal fade" id="edit-memo-modal" tabindex="-1" role="dialog" aria-labelledby="category-modalLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">edit</h5>
+                        <h5 class="modal-title" id="category-modalLabel">edit</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -178,9 +178,14 @@
                             <div class="form-group row">
                                 <label for="description" class="col-md-4 col-form-label">{{ __('内容') }}</label>
                                 <div class="col-md-12">
-                                    <textarea name="description" id="edit-description" rows="7" required
+                                    <textarea name="description" id="edit-description" rows="3" required
                                         class="form-control"></textarea>
                                 </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="images" class="col-md-4 col-form-label">{{ __('写真')}}</label>
+                                <input type="file" name="images" id="images" required class="form-control">
                             </div>
 
                             <div class="row justify-content-center">
@@ -196,12 +201,12 @@
 
         <!-- modal category add -->
 
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        <div class="modal fade" id="category-modal" tabindex="-1" role="dialog" aria-labelledby="category-modalLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">add category</h5>
+                        <h5 class="modal-title" id="category-modalLabel">新規カテゴリを追加</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -211,17 +216,12 @@
                             @method('POST')
                             {{ csrf_field() }}
                             <div class="form-group">
-                                <label for="recipient-name" class="col-form-label">name</label>
+                                <label for="recipient-name" class="col-form-label">カテゴリの名</label>
                                 <input type="text" name="name" class="form-control" id="recipient-name" required
                                     class="form-control">
                             </div>
-                            <div class="form-group">
-                                <label for="message-text" class="col-form-label" required
-                                    class="form-control">description</label>
-                                <textarea class="form-control" id="message-text" name="description"></textarea>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Add</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+                                    <button type="submit" class="btn btn-primary">追加</button>
                                 </div>
                             </div>
                         </form>

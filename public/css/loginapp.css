@@ -4,7 +4,7 @@
 }
 
 body {
-    background: #1f2123;
+    background: #fff;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -36,7 +36,7 @@ span {
 }
 
 a {
-    color: #333;
+    color: #3490dc;
     font-size: 14px;
     text-decoration: none;
     margin: 15px 0;
@@ -44,8 +44,8 @@ a {
 
 button {
     border-radius: 20px;
-    border: 1px solid #FF4B2B;
-    background-color: #FF4B2B;
+    border: 1px solid #3490dc;
+    background-color: #3490dc;
     color: #FFFFFF;
     font-size: 12px;
     font-weight: bold;
@@ -158,9 +158,9 @@ input {
 }
 
 .overlay {
-    background: #FF416C;
-    background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
-    background: linear-gradient(to right, #FF4B2B, #FF416C);
+    background: #3490dc;
+    background: -webkit-linear-gradient(to right, #3490dc);
+    background: linear-gradient(to right, #3490dc);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 0 0;
@@ -241,7 +241,7 @@ footer p {
 }
 
 footer i {
-    color: red;
+    color: #3490dc;
 }
 
 footer a {
