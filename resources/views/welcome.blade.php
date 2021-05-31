@@ -12,11 +12,7 @@
 	<link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
 	<script src="{{ asset('js/all.min.js')}}" defer></script>
 	<script src="{{ asset('js/loginapp.js') }}" defer></script>
-<<<<<<< HEAD
-	<title>Welcome to 日本語メモ帳</title>
-=======
 	<title>NihongoMemo</title>
->>>>>>> faa5443ddd9d2161815b5443ccf55757814661d0
 </head>
 
 {{-- Sign Up Form --}}
@@ -27,31 +23,29 @@
 			<form action="{{ route('register') }}" method="POST">
 			@csrf
 
-			<input id="name" type="text" placeholder="Name" class="form-control @error('name') is-invalid @enderror"
-				name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-			@error('name')
-			<span class="invalid-feedback" role="alert">
-				<strong>{{ $message }}</strong>
-			</span>
-			@enderror
+			
+				<h1>Create Account</h1>
+					<div class="social-container">
+						<a href="#" class="social"><i class="fab fa-facebook"></i></a>
+						<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+					</div>
+					<span>or use your email for registration</span>
+				<input id="name" type="text" placeholder="Name" class="form-control @error('name') is-invalid @enderror"
+					name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+				@error('name')
+				<span class="invalid-feedback" role="alert">
+					<strong>{{ $message }}</strong>
+				</span>
+				@enderror
 
-			<input id="email" type="email" placeholder="Email"
-				class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}"
-				required autocomplete="email">
-			@error('email')
-			<span class="invalid-feedback" role="alert">
-				<strong>{{ $message }}</strong>
-			</span>
-			@enderror
-
-			<input id="password" type="password" placeholder="Password"
-				class="form-control @error('password') is-invalid @enderror" name="password" required
-				autocomplete="new-password">
-			@error('password')
-			<span class="invalid-feedback" role="alert">
-				<strong>{{ $message }}</strong>
-			</span>
-			@enderror
+				<input id="email" type="email" placeholder="Email"
+					class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}"
+					required autocomplete="email">
+				@error('email')
+				<span class="invalid-feedback" role="alert">
+					<strong>{{ $message }}</strong>
+				</span>
+				@enderror
 
 				<input id="password" type="password" placeholder="Password"
 					class="form-control @error('password') is-invalid @enderror" name="password" required
@@ -78,6 +72,11 @@
 			@csrf
 
 				<h1>Sign in</h1>
+				<div class="social-container">
+						<a href="#" class="social"><i class="fab fa-facebook"></i></a>
+						<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+				</div>
+
 				<input type="email" placeholder="Email" class="form-control @error('email') is-invalid @enderror"
 					name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 				@error('email')
