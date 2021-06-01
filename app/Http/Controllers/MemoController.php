@@ -20,7 +20,7 @@ class MemoController extends Controller
         $payload = $request->all();
         unset($payload['_token']);
         $payload['user_id'] = Auth::user()->id;
-
+        
         if ($request->hasFile('images')) {
             $destination_path = 'public/images/memos';
             $image = $request->file('images');
@@ -28,6 +28,24 @@ class MemoController extends Controller
             $path = $request->file('images')->storeAs($destination_path, $image_name);
             $payload['images'] = $image_name;
         }
+
+        if ($request->hasFile('audio')) {
+            $this->validate($request, 
+			[
+				'audio' => 'mimes:mp3,mp4,3gb,wav,wma ,avi|max:25000',
+			],			
+			[
+				'audio.mimes' => 'Chỉ chấp nhận hình thẻ với đuôi .mp3 .mp4 .3gb .wav .wma .avi ',
+				'audio.max' => 'Hình thẻ giới hạn dung lượng không quá 25M',
+			]
+		);
+            $destination_path = 'public/audio/memos';
+            $audio = $request->file('audio');
+            $audio_name = $audio->getClientOriginalName();
+            $path = $request->file('audio')->storeAs($destination_path, $audio_name);
+            $payload['audio'] = $audio_name;
+        }
+        
         Memo::query()->create($payload);
 
         return redirect()->back()->with('success', '追加しました');

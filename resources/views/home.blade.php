@@ -48,6 +48,7 @@
                             <th scope="col">カテゴリ</th>
                             <th scope="col">内容</th>
                             <th scope="col">写真</th>
+                            <th scope="col">音声</th>
                             <th scope="col">
                             
                                 <a href="/memos/add" class="btn btn-outline-primary" data-toggle="modal"
@@ -62,6 +63,16 @@
                                 <td>{{ $memo->category->name }}</td>
                                 <td>{{ $memo->description }}</td>
                                 <td><img width="responssive" height="50px" src="{{asset('storage/images/memos/'.$memo->images)}}" enctype="multipart/form-data"></td>
+                                <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-sm">音声</button></td>
+                                <!-- audiomodal -->
+                                <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-sm">
+                                        <div class="modal-content">
+                                            <audio  width="responssive" height="50px" controls><source src="{{asset('storage/audio/memos/'.$memo->audio)}}" type="audio/ogg"></audio>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- endaudiomodal -->
                                 <td>
                                     <a onclick="onEditButton({{ $memo->id }})" class="btn btn-primary"
                                         data-toggle="modal" data-target="#edit-memo-modal">
@@ -85,6 +96,7 @@
             </div>
         </div>
 
+ 
         <!-- Modal add-->
         <div class="modal fade" id="add-memo-modal" tabindex="-1" role="dialog" aria-labelledby="category-modalLabel"
             aria-hidden="true">
@@ -130,7 +142,11 @@
                             </div>
                             <div class="form-group row">
                                 <label for="images" class="col-md-4 col-form-label">{{ __('写真')}}</label>
-                                <input type="file" name="images" id="images" required class="form-control">
+                                <input type="file" name="images" id="images" class="form-control">
+                            </div>
+                            <div class="form-group row">
+                                <label for="audio" class="col-md-4 col-form-label">{{ __('音声')}}</label>
+                                <input type="file" name="audio" id="audio"  class="form-control">
                             </div>
 
                             <div class="row justify-content-center">
