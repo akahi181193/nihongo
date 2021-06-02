@@ -4,12 +4,6 @@
     <div class="container">
         {{-- @include('layouts.common-navbar') --}}
 
-        <form class="form-inline w-100 justify-content-center" method="GET" action="{{ url('/home') }}">
-            <input class="form-control mr-sm-2" value="{{ request()->get('keyword') }}" type="text" name="keyword"
-                placeholder="タイトル検索" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-
         @if (\Session::has('success'))
             <div class="success-alert alert alert-success alert-dismissible fade show"
                 style="position: fixed; top: 100px; right: 0;" role="alert">
@@ -22,15 +16,22 @@
 
         <div class="row mt-3">
             <div class="categories col-md-3">
-                <div class="row justify-content-around align-items-center">
+                <div class="row justify-content-around align-items-center ml-0 mr-0">
                     <button type="button" class="btn btn-primary btn-block" data-toggle="modal"
-                        data-target="#category-modal">Add Category +</button>
+                        data-target="#category-modal">
+                        <i class="far fa-plus-square"></i>
+                        <span class="ml-1">新規 カテゴリ</span>
+                    </button>
                 </div>
                 <style>
                     #list-category {
-                        height: calc(100vh - 55px - 37px - 5rem - 37px);
-                        overflow-y: auto;
+                        @media screen and (max-width: 768px) {
+                            height: calc(100vh - 55px - 37px - 5rem - 37px);
+                            overflow-y: auto;
+                        }
+
                     }
+
                 </style>
                 <div id="list-category" class="list-group mt-3">
                     @foreach ($categories as $item)
@@ -40,8 +41,15 @@
                 </div>
             </div>
 
-            <div class="memos col-md-9">
-                <table class="table table-striped" id="">
+            <div class="memos col-md-9 mt-sm-3 mt-3 mt-md-0 mt-lg-0">
+                <form class="form-inline w-100 justify-content-center" method="GET" action="{{ url('/home') }}">
+                    <input class="form-control col-md-6 col-sm-8 col-xs-11" value="{{ request()->get('keyword') }}"
+                        type="text" name="keyword" placeholder="タイトル" aria-label="Search">
+                    <button class="btn btn-outline-success ml-0 ml-sm-1 ml-md-1 ml-lg-1 col-md-2 col-sm-3 col-xs-3 mt-1 mt-sm-0 mt-md-0 mt-lg-0"
+                        type="submit">検索</button>
+                </form>
+
+                <table class="table table-striped mt-3" id="">
                     <thead>
                         <tr>
                             <th scope="col">タイトル</th>
@@ -50,9 +58,11 @@
                             <th scope="col">写真</th>
                             <th scope="col">音声</th>
                             <th scope="col">
-                            
-                                <a href="/memos/add" class="btn btn-outline-primary" data-toggle="modal"
-                                    data-target="#add-memo-modal">追加</a>
+
+                                <a class="btn btn-outline-primary" data-toggle="modal" data-target="#add-memo-modal">
+                                    <i class="far fa-plus-square"></i>
+                                    <span class="ml-1">追加</span>
+                                </a>
                             </th>
                         </tr>
                     </thead>
@@ -62,23 +72,39 @@
                                 <td scope="row">{{ $memo->name }}</td>
                                 <td>{{ $memo->category->name }}</td>
                                 <td>{{ $memo->description }}</td>
-                                <td><img width="responssive" height="50px" src="{{asset('storage/images/memos/'.$memo->images)}}" enctype="multipart/form-data"></td>
-                                <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-sm">音声</button></td>
+                                <td>
+                                    @isset($memo->images)
+                                        <img width="responssive" height="50px"
+                                            src="{{ asset('storage/images/memos/' . $memo->images) }}"
+                                            enctype="multipart/form-data">
+                                    @endisset
+                                </td>
+                                <td>
+                                    <a class="" data-toggle="modal" data-target=".bd-example-modal-sm">
+                                        <i class="fas fa-play-circle"></i>
+                                    </a>
+                                </td>
                                 <!-- audiomodal -->
-                                <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                                <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"
+                                    aria-labelledby="mySmallModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-sm">
                                         <div class="modal-content">
-                                            <audio  width="responssive" height="50px" controls><source src="{{asset('storage/audio/memos/'.$memo->audio)}}" type="audio/ogg"></audio>
+                                            <audio width="responssive" height="50px" controls>
+                                                <source src="{{ asset('storage/audio/memos/' . $memo->audio) }}"
+                                                    type="audio/ogg">
+                                            </audio>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- endaudiomodal -->
                                 <td>
-                                    <a onclick="onEditButton({{ $memo->id }})" class="btn btn-primary"
-                                        data-toggle="modal" data-target="#edit-memo-modal">
-                                        編集
+                                    <a onclick="onEditButton({{ $memo->id }})" class="text-primary" data-toggle="modal"
+                                        data-target="#edit-memo-modal">
+                                        <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="/memos/delete/{{ $memo->id }}" class="btn btn-danger">削除</a>
+                                    <a href="/memos/delete/{{ $memo->id }}" class="text-danger ml-1">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach
@@ -96,7 +122,7 @@
             </div>
         </div>
 
- 
+
         <!-- Modal add-->
         <div class="modal fade" id="add-memo-modal" tabindex="-1" role="dialog" aria-labelledby="category-modalLabel"
             aria-hidden="true">
@@ -109,7 +135,8 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form id="memo-add-form" action="{{ route('storeMemo') }}" method="POST" enctype="multipart/form-data">
+                        <form id="memo-add-form" action="{{ route('storeMemo') }}" method="POST"
+                            enctype="multipart/form-data">
                             @csrf
 
                             <div class="form-group row">
@@ -127,26 +154,26 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="name" class="col-md-4 col-form-label">{{ __('タイトル') }}</label>
+                                <label for="name" class="col-md-4 col-form-label">{{ 'タイトル' }}</label>
                                 <div class="col-md-12">
                                     <input type="text" name="name" id="name" required class="form-control">
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="description" class="col-md-4 col-form-label">{{ __('内容') }}</label>
+                                <label for="description" class="col-md-4 col-form-label">{{ '内容' }}</label>
                                 <div class="col-md-12">
                                     <textarea name="description" id="description" rows="3" required
                                         class="form-control"></textarea>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="images" class="col-md-4 col-form-label">{{ __('写真')}}</label>
+                                <label for="images" class="col-md-4 col-form-label">{{ '写真' }}</label>
                                 <input type="file" name="images" id="images" class="form-control">
                             </div>
                             <div class="form-group row">
-                                <label for="audio" class="col-md-4 col-form-label">{{ __('音声')}}</label>
-                                <input type="file" name="audio" id="audio"  class="form-control">
+                                <label for="audio" class="col-md-4 col-form-label">{{ '音声' }}</label>
+                                <input type="file" name="audio" id="audio" class="form-control">
                             </div>
 
                             <div class="row justify-content-center">
@@ -166,7 +193,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="category-modalLabel">edit</h5>
+                        <h5 class="modal-title" id="category-modalLabel">編集</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -200,12 +227,17 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="images" class="col-md-4 col-form-label">{{ __('写真')}}</label>
+                                <label for="images" class="col-md-4 col-form-label">{{ __('写真') }}</label>
                                 <input type="file" name="images" id="images" required class="form-control">
                             </div>
 
+                            <div class="form-group row">
+                                <label for="audio" class="col-md-4 col-form-label">{{ '音声' }}</label>
+                                <input type="file" name="audio" id="audio" class="form-control">
+                            </div>
+
                             <div class="row justify-content-center">
-                                <button style="min-width: 100px" type="submit" class="btn btn-primary">編集</button>
+                                <button style="min-width: 100px" type="submit" class="btn btn-primary">更新</button>
                             </div>
                         </form>
 
@@ -236,93 +268,93 @@
                                 <input type="text" name="name" class="form-control" id="recipient-name" required
                                     class="form-control">
                             </div>
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
-                                    <button type="submit" class="btn btn-primary">追加</button>
-                                </div>
-                            </div>
-                        </form>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+                            <button type="submit" class="btn btn-primary">追加</button>
                     </div>
-
                 </div>
+                </form>
             </div>
+
         </div>
-        <!-- endmodal -->
+    </div>
+    </div>
+    <!-- endmodal -->
 
-    @endsection
+@endsection
 
-    @section('scripts')
-        <!-- handle alert queue -->
-        <script>
-            window.onload = function() {
-                const alertQueue = localStorage.getItem('alert-queue');
-                if (alertQueue) {
-                    const alertEl = document.createElement('div');
-                    $(alertEl).addClass('success-alert alert alert-success alert-dismissible fade show');
-                    $(alertEl).attr('style', 'position: fixed; top: 100px; right: 0; z-index: 10;');
-                    $(alertEl).attr('role', 'alert');
-                    $(alertEl).html(
-                        `<span>${alertQueue}</span> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>`
-                    );
+@section('scripts')
+    <!-- handle alert queue -->
+    <script>
+        window.onload = function() {
+            const alertQueue = localStorage.getItem('alert-queue');
+            if (alertQueue) {
+                const alertEl = document.createElement('div');
+                $(alertEl).addClass('success-alert alert alert-success alert-dismissible fade show');
+                $(alertEl).attr('style', 'position: fixed; top: 100px; right: 0; z-index: 10;');
+                $(alertEl).attr('role', 'alert');
+                $(alertEl).html(
+                    `<span>${alertQueue}</span> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>`
+                );
 
-                    $('.container')[0].append(alertEl);
+                $('.container')[0].append(alertEl);
 
-                    localStorage.setItem('alert-queue', '');
-                }
+                localStorage.setItem('alert-queue', '');
             }
+        }
 
-        </script>
+    </script>
 
-        <script>
-            setTimeout(() => {
-                $('.success-alert').remove();
-            }, 1000);
+    <script>
+        setTimeout(() => {
+            $('.success-alert').remove();
+        }, 1000);
 
-        </script>
+    </script>
 
-        <!-- edit scripts -->
-        <script>
-            function onEditButton(id) {
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                //res biếm callback function
+    <!-- edit scripts -->
+    <script>
+        function onEditButton(id) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            //res biếm callback function
+
+            $.ajax('/memos/' + id, {
+                success: (res) => {
+                    $('#edit-category-id').val(res.category_id);
+                    $('#edit-name').val(res.name);
+                    $('#edit-description').val(res.description);
+                },
+                error: (error) => {
+
+                }
+            });
+
+            $('#edit-add-form').on('submit', (event) => {
+                event.preventDefault();
+
+                const formValue = $('#edit-add-form').serializeArray();
+                const payload = formValue.reduce((s, v) => {
+                    s[v.name] = v.value;
+                    return s;
+                }, {});
 
                 $.ajax('/memos/' + id, {
-                    success: (res) => {
-                        $('#edit-category-id').val(res.category_id);
-                        $('#edit-name').val(res.name);
-                        $('#edit-description').val(res.description);
+                    method: 'patch',
+                    data: payload, //update data
+                    success: function() {
+                        $('#edit-memo-modal').modal('toggle');
+                        localStorage.setItem('alert-queue', '編集しました。');
+                        location.reload();
                     },
                     error: (error) => {
-
+                        console.log(error);
                     }
                 });
+            });
+        }
 
-                $('#edit-add-form').on('submit', (event) => {
-                    event.preventDefault();
-
-                    const formValue = $('#edit-add-form').serializeArray();
-                    const payload = formValue.reduce((s, v) => {
-                        s[v.name] = v.value;
-                        return s;
-                    }, {});
-
-                    $.ajax('/memos/' + id, {
-                        method: 'patch',
-                        data: payload, //update data
-                        success: function() {
-                            $('#edit-memo-modal').modal('toggle');
-                            localStorage.setItem('alert-queue', '編集しました。');
-                            location.reload();
-                        },
-                        error: (error) => {
-                            console.log(error);
-                        }
-                    });
-                });
-            }
-
-        </script>
-    @endsection
+    </script>
+@endsection

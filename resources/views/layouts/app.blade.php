@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>日本語メモ帳</title>
+    <title>NihongoMemo</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -20,7 +20,12 @@
     <!-- datatable -->
     <link href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <!-- Styles -->
-    <link href="{{ asset('css/fontawesome.css') }}" rel="stylesheet">
+
+    <link href="{{ asset('css/brands.css') }}" rel="stylesheet">
+	<link href="{{ asset('css/fontawesome.css') }}" rel="stylesheet">
+	<link href="{{ asset('css/solid.css') }}" rel="stylesheet">
+	<link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
+	<script src="{{ asset('js/all.min.js')}}" defer></script>
 </head>
 <body>
     <div id="app">
@@ -42,6 +47,26 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                              <a class="nav-link active" aria-current="page" href="{{ url('/') }}">ホーム</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    ツール</a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" href="#">チャットボット</a></li>
+                                    <li><a class="dropdown-item" href="#">通訳</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="{{route('trashes')}}">ゴミ箱</a></li>
+                                  </ul>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link" href={{'/about'}}>チーム概要</a>
+                            </li>
+                            </li>
+                          </ul>
+                    
                         <!-- Authentication Links -->
                         @guest
                         @else
