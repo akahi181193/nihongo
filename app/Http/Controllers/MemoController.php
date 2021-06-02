@@ -25,7 +25,7 @@ class MemoController extends Controller
             $destination_path = 'public/images/memos';
             $image = $request->file('images');
             $image_name = $image->getClientOriginalName();
-            $path = $request->file('images')->storeAs($destination_path, $image_name);
+            $request->file('images')->storeAs($destination_path, $image_name);
             $payload['images'] = $image_name;
         }
 
@@ -42,7 +42,7 @@ class MemoController extends Controller
             $destination_path = 'public/audio/memos';
             $audio = $request->file('audio');
             $audio_name = $audio->getClientOriginalName();
-            $path = $request->file('audio')->storeAs($destination_path, $audio_name);
+            $request->file('audio')->storeAs($destination_path, $audio_name);
             $payload['audio'] = $audio_name;
         }
         
