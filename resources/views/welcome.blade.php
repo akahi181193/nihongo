@@ -6,6 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="{{ asset('css/loginapp.css') }}" rel="stylesheet">
+	<link href="{{ asset('css/about.css') }}" rel="stylesheet">
 	<link href="{{ asset('css/brands.css') }}" rel="stylesheet">
 	<link href="{{ asset('css/fontawesome.css') }}" rel="stylesheet">
 	<link href="{{ asset('css/solid.css') }}" rel="stylesheet">
@@ -120,5 +121,9 @@
 	</div>
 
 </body>
+
+<div class="footer">
+    <p>Copyright &copy; NAL 2021</p>
+</div>
 
 </html>

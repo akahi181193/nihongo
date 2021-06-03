@@ -36,9 +36,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 
     Route::get('/trashes', [TrashController::class, 'index'])->name('trashes');
-
     Route::get('/trashes/{id}/restore', [TrashController::class, 'restore'])->name('restore-memo');
-
     Route::get('/trashes/{id}/force-delete', [TrashController::class, 'destroy'])->name('force-delete-memo');
 
     // API

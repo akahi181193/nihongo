@@ -49,6 +49,7 @@
                         type="submit">検索</button>
                 </form>
 
+
                 <table class="table table-striped mt-3" id="">
                     <thead>
                         <tr>
@@ -102,7 +103,7 @@
                                         data-target="#edit-memo-modal">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="/memos/delete/{{ $memo->id }}" class="text-danger ml-1">
+                                    <a href="/memos/delete/{{ $memo->id }}" class="text-danger ml-5">
                                         <i class="fas fa-trash"></i>
                                     </a>
                                 </td>
@@ -279,6 +280,31 @@
     </div>
     </div>
     <!-- endmodal -->
+
+        {{-- <!-- modal edit category -->
+        <div class="modal fade" id="edit-category-modal" tabindex="-1" role="dialog" aria-labelledby="category-modalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="category-modalLabel">編集</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="edit-add-form">
+                            <div class="form-group row">
+                                <label for="category-id" class="col-md-4 col-form-label">{{ __('カテゴリ') }}</label>
+                                <div class="col-md-12">
+                                    <select name="category_id" id="edit-category-id" class="form-control" required>
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+        <!-- end modal edit category --> --}}
 
 @endsection
 
