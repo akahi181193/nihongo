@@ -15,7 +15,7 @@
                                 <a href="{{ route('restore-memo', ['id' => $memo->id]) }}" class="text-primary">
                                     <i class="fas fa-undo"></i>
                                 </a>
-                                <a href="{{ route('force-delete-memo', ['id' => $memo->id]) }}" class="text-danger ml-1">
+                                <a href="{{ route('force-delete-memo', ['id' => $memo->id]) }}" class="text-danger ml-5">
                                     <i class="fas fa-trash"></i>
                                 </a>
                             </td>
