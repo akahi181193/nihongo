@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -33,11 +34,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/memos', [MemoController::class, 'store'])->name('storeMemo');
     Route::get('/memos/edit/{id}', [MemoController::class, 'edit'])->name('editMemo');
     Route::get('/memos/delete/{id}', [MemoController::class, 'delete'])->name('deleteMemo');
+    Route::get('/category/delete/{id}', [CategoryController::class, 'destroy'])->name('categoryDelete');
 
 
     Route::get('/trashes', [TrashController::class, 'index'])->name('trashes');
     Route::get('/trashes/{id}/restore', [TrashController::class, 'restore'])->name('restore-memo');
     Route::get('/trashes/{id}/force-delete', [TrashController::class, 'destroy'])->name('force-delete-memo');
+
 
     // API
     Route::get('/memos/{id}', [MemoController::class, 'getMemoById'])->name('getMemoById');

@@ -34,9 +34,18 @@
 
                 </style>
                 <div id="list-category" class="list-group mt-3">
-                    @foreach ($categories as $item)
-                        <a class="list-group-item list-group-item-action {{ request()->get('category') == $item->id ? 'active' : '' }}"
-                            href="/home?category={{ $item->id }}">{{ $item->name }}</a>
+                @foreach ($categories as $item)
+                    <div class="row">
+                        <div class="col-md-10">
+                                <a class="list-group-item list-group-item-action {{ request()->get('category') == $item->id ? 'active' : '' }}"
+                                    href="/home?category={{ $item->id }}">{{ $item->name }}</a>
+                        </div>
+                        <div class="col-md-2">
+                        <a href="{{ route('categoryDelete',['id'=> $item->id ]) }}">
+                        <button type="button" class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
+                        </a>
+                        </div>
+                    </div>
                     @endforeach
                 </div>
             </div>
@@ -71,7 +80,7 @@
                         @foreach ($memos as $memo)
                             <tr>
                                 <td scope="row">{{ $memo->name }}</td>
-                                <td>{{ $memo->category->name }}</td>
+                                <td>{{ !empty($memo->category->name) ? $memo->category->name:' 削除しました。' }}</td>
                                 <td>{{ $memo->description }}</td>
                                 <td>
                                     @isset($memo->images)
@@ -101,10 +110,14 @@
                                 <td>
                                     <a onclick="onEditButton({{ $memo->id }})" class="text-primary" data-toggle="modal"
                                         data-target="#edit-memo-modal">
+                                        <button type="button" class="btn btn-outline-primary">
                                         <i class="fas fa-edit"></i>
+                                        </button>
                                     </a>
                                     <a href="/memos/delete/{{ $memo->id }}" class="text-danger ml-5">
+                                        <button type="button" class="btn btn-outline-danger"> 
                                         <i class="fas fa-trash"></i>
+                                        </button>
                                     </a>
                                 </td>
                             </tr>

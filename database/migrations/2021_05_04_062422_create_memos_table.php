@@ -19,6 +19,7 @@ class CreateMemosTable extends Migration
             $table->bigInteger('category_id');
             $table->string('name');
             $table->string('images')->nullable();
+            $table->string('audio')->nullable();
             $table->string('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
