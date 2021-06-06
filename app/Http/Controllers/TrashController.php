@@ -15,44 +15,69 @@ class TrashController extends Controller
 
     public function index()
     {
-        // $categories = Category::query()
-        //     ->where('user_id', '=', Auth::user()->id);
-   
-        // $memos = Memo::onlyTrashed()
-        //     ->where('user_id', '=', Auth::user()->id)
-        //     ->with('category')         
-        //     ->get();
-        $memos = Memo::onlyTrashed()->get();
-        $category = Category::onlyTrashed()->get();
-        return view('trash', compact('category','memos'));
+        $memos = Memo::onlyTrashed()->with('category')->get();
+
+        $categories = Category::query()
+            ->withTrashed()
+            ->withCount('deletedMemos')
+            ->get();
+
+        $categories = $categories->filter(function ($category) {
+            return $category->deleted_memos_count > 0;
+        });
+
+        return view('trash', compact('categories', 'memos'));
     }
 
-    public function destroy($id)
+    public function destroyMemo($id)
     {
         $memo = Memo::withTrashed()->find($id);
-        $category = Category::withTrashed()->find($id);
         if ($memo) {
             $memo->forceDelete();
-        }
-        if ($category) {
-
-            $category->forceDelete();
-
         }
         return redirect()->back();
     }
 
-    public function restore($id)
+    public function restoreMemo($id)
     {
         $memo = Memo::withTrashed()->find($id);
-        $category = Category::withTrashed()->find($id);
         if ($memo) {
+            $category = Category::withTrashed()->find($memo->category_id);
+
+            if ($category) {
+                $category->restore();
+            }
             $memo->restore();
         }
+
+        return redirect()->back();
+    }
+
+    public function destroyCategory($id)
+    {
+        $category = Category::withTrashed()->find($id);
+
+        if ($category) {
+            Memo::query()
+                ->where('category_id', '=', $id)
+                ->delete();
+
+            $category->delete();
+        }
+
+        return redirect()->back();
+    }
+
+    public function restoreCategory($id)
+    {
+        $category = Category::withTrashed()->find($id);
+
         if ($category) {
             $category->restore();
-            Memo::query()->where('category_id', '=',$id )->restore();
+
+            Memo::query()->where('category_id', '=', $id)->restore();
         }
+
         return redirect()->back();
     }
 }

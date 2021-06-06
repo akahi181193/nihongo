@@ -16,8 +16,8 @@
 
         <div class="row mt-3">
             <div class="categories col-md-3">
-                <div class="row justify-content-around align-items-center ml-0 mr-0">
-                    <button type="button" class="btn btn-primary btn-block" data-toggle="modal"
+                <div class="w-100">
+                    <button type="button" class="btn btn-primary btn-block w-100" data-toggle="modal"
                         data-target="#category-modal">
                         <i class="far fa-plus-square"></i>
                         <span class="ml-1">新規 カテゴリ</span>
@@ -25,27 +25,32 @@
                 </div>
                 <style>
                     #list-category {
-                        @media screen and (max-width: 768px) {
-                            height: calc(100vh - 55px - 37px - 5rem - 37px);
-                            overflow-y: auto;
-                        }
 
+                        height: calc(100vh - 55px - 37px - 5rem - 37px);
+                        overflow-y: auto;
+
+                        @media screen and (max-width: 768px) {}
+
+                    }
+
+                    #list-category::-webkit-scrollbar {
+                        display: none;
                     }
 
                 </style>
                 <div id="list-category" class="list-group mt-3">
-                @foreach ($categories as $item)
-                    <div class="row">
-                        <div class="col-md-10">
-                                <a class="list-group-item list-group-item-action {{ request()->get('category') == $item->id ? 'active' : '' }}"
+                    @foreach ($categories as $item)
+                        <div class="list-group-item list-group-item-action" style="display: flex; flex-flow: row;">
+                            <div class="col-10">
+                                <a class="{{ request()->get('category') == $item->id ? 'active' : '' }}"
                                     href="/home?category={{ $item->id }}">{{ $item->name }}</a>
+                            </div>
+                            <div class="col-2">
+                                <a href="{{ route('categoryDelete', ['id' => $item->id]) }}">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </div>
                         </div>
-                        <div class="col-md-2">
-                        <a href="{{ route('categoryDelete',['id'=> $item->id ]) }}">
-                        <button type="button" class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
-                        </a>
-                        </div>
-                    </div>
                     @endforeach
                 </div>
             </div>
@@ -54,7 +59,8 @@
                 <form class="form-inline w-100 justify-content-center" method="GET" action="{{ url('/home') }}">
                     <input class="form-control col-md-6 col-sm-8 col-xs-11" value="{{ request()->get('keyword') }}"
                         type="text" name="keyword" placeholder="タイトル" aria-label="Search">
-                    <button class="btn btn-outline-success ml-0 ml-sm-1 ml-md-1 ml-lg-1 col-md-2 col-sm-3 col-xs-3 mt-1 mt-sm-0 mt-md-0 mt-lg-0"
+                    <button
+                        class="btn btn-outline-success ml-0 ml-sm-1 ml-md-1 ml-lg-1 col-md-2 col-sm-3 col-xs-3 mt-1 mt-sm-0 mt-md-0 mt-lg-0"
                         type="submit">検索</button>
                 </form>
 
@@ -80,7 +86,7 @@
                         @foreach ($memos as $memo)
                             <tr>
                                 <td scope="row">{{ $memo->name }}</td>
-                                <td>{{ !empty($memo->category->name) ? $memo->category->name:' 削除しました。' }}</td>
+                                <td>{{ !empty($memo->category->name) ? $memo->category->name : ' 削除しました。' }}</td>
                                 <td>{{ $memo->description }}</td>
                                 <td>
                                     @isset($memo->images)
@@ -107,17 +113,18 @@
                                     </div>
                                 </div>
                                 <!-- endaudiomodal -->
+
+                                <!-- Edit and Delete button on lick -->
+
+                                <!-- edit button  -->
                                 <td>
                                     <a onclick="onEditButton({{ $memo->id }})" class="text-primary" data-toggle="modal"
                                         data-target="#edit-memo-modal">
-                                        <button type="button" class="btn btn-outline-primary">
                                         <i class="fas fa-edit"></i>
-                                        </button>
                                     </a>
-                                    <a href="/memos/delete/{{ $memo->id }}" class="text-danger ml-5">
-                                        <button type="button" class="btn btn-outline-danger"> 
+                                    <!-- delete button  -->
+                                    <a href="{{ route('delete-memo', ['id' => $memo->id]) }}" class="text-danger ml-5">
                                         <i class="fas fa-trash"></i>
-                                        </button>
                                     </a>
                                 </td>
                             </tr>
@@ -294,7 +301,7 @@
     </div>
     <!-- endmodal -->
 
-        {{-- <!-- modal edit category -->
+    {{-- <!-- modal edit category -->
         <div class="modal fade" id="edit-category-modal" tabindex="-1" role="dialog" aria-labelledby="category-modalLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">

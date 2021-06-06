@@ -16,4 +16,8 @@ class Category extends Model
         'user_id',
         'description',
     ];
+
+    function deletedMemos() {
+        return $this->hasMany(Memo::class)->onlyTrashed();
+    }
 }
