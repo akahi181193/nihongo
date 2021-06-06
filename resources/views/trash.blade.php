@@ -14,16 +14,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                    @foreach ($category as $categorys)
+                    @foreach ($categories as $category)
                             <tr>
-                                <th scope="row">{{ $categorys->name }}</th>
+                                <th scope="row">{{ $category->name }}</th>
                             
                                 <td>
-                                    <a href="{{ route('restore-memo', ['id' => $categorys->id]) }}" class="text-primary">
+                                    <a href="{{ route('restore-category', ['id' => $category->id]) }}" class="text-primary">
                                         <i class="fas fa-undo"></i>
-                                    </a>
-                                    <a href="{{ route('force-delete-memo', ['id' => $categorys->id]) }}" class="text-danger ml-5">
-                                        <i class="fas fa-trash"></i>
                                     </a>
                                 </td>
                             </tr>

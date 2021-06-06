@@ -33,13 +33,16 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/category', [HomeController::class, 'store'])->name('storecategory');
     Route::post('/memos', [MemoController::class, 'store'])->name('storeMemo');
     Route::get('/memos/edit/{id}', [MemoController::class, 'edit'])->name('editMemo');
-    Route::get('/memos/delete/{id}', [MemoController::class, 'delete'])->name('deleteMemo');
+    Route::get('/memos/delete/{id}', [MemoController::class, 'delete'])->name('delete-memo');
     Route::get('/category/delete/{id}', [CategoryController::class, 'destroy'])->name('categoryDelete');
 
 
     Route::get('/trashes', [TrashController::class, 'index'])->name('trashes');
-    Route::get('/trashes/{id}/restore', [TrashController::class, 'restore'])->name('restore-memo');
-    Route::get('/trashes/{id}/force-delete', [TrashController::class, 'destroy'])->name('force-delete-memo');
+    Route::get('/trashes/{id}/restore-memo', [TrashController::class, 'restoreMemo'])->name('restore-memo');
+    Route::get('/trashes/{id}/force-delete-memo', [TrashController::class, 'destroyMemo'])->name('force-delete-memo');
+
+    Route::get('/trashes/{id}/restore-category', [TrashController::class, 'restoreCategory'])->name('restore-category');
+    Route::get('/trashes/{id}/force-delete-category', [TrashController::class, 'destroyCategory'])->name('force-delete-category');
 
 
     // API
