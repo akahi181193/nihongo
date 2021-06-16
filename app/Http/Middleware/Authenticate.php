@@ -15,6 +15,7 @@ class Authenticate extends Middleware
     protected function redirectTo($request)
     {
         if (! $request->expectsJson()) {
+            // nếu ko có root thì ko trỏ đến trang wellcome trong midleware đc
             return route('root');
         }
     }

@@ -10111,3 +10111,9 @@ a.text-dark:focus {
         border-color: #dee2e6;
     }
 }
+.divThfloat{
+    white-space: nowrap;
+    width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

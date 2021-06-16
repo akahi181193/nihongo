@@ -26,10 +26,6 @@
 
 			
 				<h1>Create Account</h1>
-					<div class="social-container">
-						<a href="#" class="social"><i class="fab fa-facebook"></i></a>
-						<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-					</div>
 					<span>or use your email for registration</span>
 				<input id="name" type="text" placeholder="Name" class="form-control @error('name') is-invalid @enderror"
 					name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
@@ -73,10 +69,7 @@
 			@csrf
 
 				<h1>Sign in</h1>
-				<div class="social-container">
-						<a href="#" class="social"><i class="fab fa-facebook"></i></a>
-						<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-				</div>
+
 
 				<input type="email" placeholder="Email" class="form-control @error('email') is-invalid @enderror"
 					name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>

@@ -19,8 +19,11 @@ class OnlyGuest
     {
         $user = Auth::user();
         if ($user) {
+            // nếu là user thì vào đây
             return redirect('/home');
         }
+        //trở về route
         return $next($request);
+
     }
 }

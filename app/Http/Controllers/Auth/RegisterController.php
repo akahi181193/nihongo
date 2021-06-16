@@ -69,11 +69,13 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'avatar'=>'default.png'
         ]);
         Category::create(['user_id' => $user->id, 'name' => '挨拶', 'description' => ""]);
         Category::create(['user_id' => $user->id, 'name' => '紹介', 'description' => ""]);
         Category::create(['user_id' => $user->id, 'name' => '電話をかける', 'description' => ""]);
         Category::create(['user_id' => $user->id, 'name' => '注意を受ける', 'description' => ""]);
+        
 
         return $user;
     }

@@ -2,12 +2,28 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link href="{{ asset('css/about.css') }}" rel="stylesheet">
+<link href="{{ asset('css/brands.css') }}" rel="stylesheet">
+<link href="{{ asset('css/fontawesome.css') }}" rel="stylesheet">
+<link href="{{ asset('css/solid.css') }}" rel="stylesheet">
+<link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
+<script src="{{ asset('js/all.min.js')}}" defer></script>
 <!------ Include the above in your HEAD tag ---------->
 
 <!-- Team -->
 <section id="team" class="pb-5">
     <div class="container">
-        <h5 class="section-title h1">プロジェクトメンバー</h5>
+    <div class="row">
+        <div class="col-md-2">
+            <a href="{{route('home')}}">
+            <button type="button" class="btn btn-outline-primary" style="height: 3em; width:3em"><i class="fas fa-arrow-circle-left"></i></button>
+            </a>
+        </div>
+        <div class="col-md-10">
+            <h5 class="section-title h1">プロジェクトメンバー</h5>
+        </div>
+       
+    </div>
+    
         <div class="row">
             <!-- Team member -->
             <div class="col-xs-12 col-sm-6 col-md-4">

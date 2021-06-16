@@ -36,6 +36,7 @@ class TrashController extends Controller
             $memo->forceDelete();
         }
         return redirect()->back();
+
     }
 
     public function restoreMemo($id)

@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
+    // Eloquent :liên kết modal với database theo mô hình(MVC) 
+    // và thao tác với database , trả dữ liệu về Controller
     use HasFactory, SoftDeletes;
     protected $table ="categories";
     protected $fillable = [
