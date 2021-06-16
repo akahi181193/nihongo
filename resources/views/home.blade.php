@@ -37,16 +37,37 @@
                         display: none;
                     }
 
+                    .custom-list-item {
+                        color: #212529;
+                    }
+
+                    .custom-list-item-active {
+                        color: #fff;        
+                    }
+
+                    .description {
+                        width: 150px;
+                        text-overflow: ellipsis;
+                        overflow-x: hidden;
+                    }
+
+                    .custom-link {
+                        cursor: pointer;
+                    }
+
                 </style>
                 <div id="list-category" class="list-group mt-3">
                     @foreach ($categories as $item)
-                        <div class="list-group-item list-group-item-action" style="display: flex; flex-flow: row;">
-                            <div class="col-10">
-                                <a class="{{ request()->get('category') == $item->id ? 'active' : '' }}"
-                                    href="/home?category={{ $item->id }}">{{ $item->name }}</a>
-                            </div>
+                        <div class="list-group-item list-group-item-action {{ request()->get('category') == $item->id ? 'active' : '' }}"
+                            style="display: flex; flex-flow: row;">
+                            <a class="col-10" style="text-decoration: none;" href="/home?category={{ $item->id }}">
+                                <div
+                                    class="custom-list-item{{ request()->get('category') == $item->id ? '-active' : '' }}">
+                                    {{ $item->name }}
+                                </div>
+                            </a>
                             <div class="col-2">
-                                <a href="{{ route('categoryDelete', ['id' => $item->id]) }}">
+                                <a style="color: #e3342f;" href="{{ route('categoryDelete', ['id' => $item->id]) }}">
                                     <i class="fas fa-trash"></i>
                                 </a>
                             </div>
@@ -68,13 +89,14 @@
                 <table class="table table-striped mt-3" id="">
                     <thead>
                         <tr>
-                            <th scope="col">タイトル</th>
-                            <th scope="col">カテゴリ</th>
+                            <th scope="col"><div class="">タイトル</div></th>
+                            @if (!request()->get('category'))
+                                <th scope="col">カテゴリ</th>
+                            @endif
                             <th scope="col">内容</th>
                             <th scope="col">写真</th>
                             <th scope="col">音声</th>
                             <th scope="col">
-
                                 <a class="btn btn-outline-primary" data-toggle="modal" data-target="#add-memo-modal">
                                     <i class="far fa-plus-square"></i>
                                     <span class="ml-1">追加</span>
@@ -85,18 +107,29 @@
                     <tbody id="table-body">
                         @foreach ($memos as $memo)
                             <tr>
-                                <td scope="row">{{ $memo->name }}</td>
-                                <td>{{ !empty($memo->category->name) ? $memo->category->name : ' 削除しました。' }}</td>
-                                <td>{{ $memo->description }}</td>
-                                <td>
+                                <td scope="row" onclick="onEditButton({{ $memo->id }})" data-toggle="modal"
+                                    data-target="#edit-memo-modal">
+                                    <div class="custom-link">{{ $memo->name }}</div>
+                                </td>
+                                @if (!request()->get('category'))
+                                    <td scope="row" style="white-space: nowrap">
+                                        {{ !empty($memo->category->name) ? $memo->category->name : ' 削除しました。' }}
+                                    </td>
+                                @endif
+                                <td scope="row">
+                                    <div class="description">
+                                        {{ $memo->description }}
+                                    </div>
+                                </td>
+                                <td scope="row">
                                     @isset($memo->images)
                                         <img width="responssive" height="50px"
                                             src="{{ asset('storage/images/memos/' . $memo->images) }}"
                                             enctype="multipart/form-data">
                                     @endisset
                                 </td>
-                                <td>
-                                    <a class="" data-toggle="modal" data-target=".bd-example-modal-sm">
+                                <td scope="row">
+                                    <a class="custom-link" data-toggle="modal" data-target=".bd-example-modal-sm">
                                         <i class="fas fa-play-circle"></i>
                                     </a>
                                 </td>
@@ -105,29 +138,53 @@
                                     aria-labelledby="mySmallModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-sm">
                                         <div class="modal-content">
-                                            <audio width="responssive" height="50px" controls>
-                                                <source src="{{ asset('storage/audio/memos/' . $memo->audio) }}"
-                                                    type="audio/ogg">
-                                            </audio>
+                                            @isset($memo->audio)
+                                                <audio width="responssive" height="50px" controls>
+                                                    <source src="{{ asset('storage/audio/memos/' . $memo->audio) }}"
+                                                        type="audio/ogg">
+                                                </audio>
+                                            @endisset
                                         </div>
                                     </div>
                                 </div>
-                                <!-- endaudiomodal -->
 
                                 <!-- Edit and Delete button on lick -->
 
                                 <!-- edit button  -->
                                 <td>
-                                    <a onclick="onEditButton({{ $memo->id }})" class="text-primary" data-toggle="modal"
+                                    <a onclick="onEditButton({{ $memo->id }})" class="text-primary custom-link" data-toggle="modal"
                                         data-target="#edit-memo-modal">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <!-- delete button  -->
-                                    <a href="{{ route('delete-memo', ['id' => $memo->id]) }}" class="text-danger ml-5">
+                                    <a class="text-danger ml-5 custom-link" data-toggle="modal" data-target="#delete-Modal">
                                         <i class="fas fa-trash"></i>
                                     </a>
                                 </td>
                             </tr>
+                            {{-- Delete Modal --}}
+                            <div class="modal fade custom-link" id="delete-Modal" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">削除</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            この {{ $memo->name }}　削除してよろしいでしょうか?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">キャンセル</button>
+                                            <a href="{{ route('delete-memo', ['id' => $memo->id]) }}"><button
+                                                    type="button" class="btn btn-danger">削除</button></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         @endforeach
                     </tbody>
                     <tfoot>
@@ -165,11 +222,11 @@
                                 <div class="col-md-12">
                                     <select name="category_id" id="category-id" class="form-control" required>
                                         <option value="">カテゴリを選択</option>
-                                        @php
-                                            foreach ($categories as $category) {
-                                                echo "<option value=\"" . $category->id . "\">" . $category->name . '</option>';
-                                            }
-                                        @endphp
+                                        @foreach ($categories as $category)
+                                            <option @if (request()->get('category') == $category->id) selected="selected" @endif value="{{$category->id}}">
+                                                {{$category->name}}
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -220,7 +277,8 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form id="edit-add-form">
+                        <form id="edit-add-form" method="POST" action="/memos/" enctype="multipart/form-data">
+                            @csrf
                             <div class="form-group row">
                                 <label for="category-id" class="col-md-4 col-form-label">{{ __('カテゴリ') }}</label>
                                 <div class="col-md-12">
@@ -248,13 +306,13 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="images" class="col-md-4 col-form-label">{{ __('写真') }}</label>
-                                <input type="file" name="images" id="images" required class="form-control">
+                                <label for="edit-image" class="col-md-4 col-form-label">{{ __('写真') }}</label>
+                                <input type="file" name="images" id="edit-image" class="form-control">
                             </div>
 
                             <div class="form-group row">
-                                <label for="audio" class="col-md-4 col-form-label">{{ '音声' }}</label>
-                                <input type="file" name="audio" id="audio" class="form-control">
+                                <label for="edit-audio" class="col-md-4 col-form-label">{{ '音声' }}</label>
+                                <input type="file" name="audio" id="edit-audio" class="form-control">
                             </div>
 
                             <div class="row justify-content-center">
@@ -284,6 +342,7 @@
                         <form action="{{ route('storecategory') }}" method="POST">
                             @method('POST')
                             {{ csrf_field() }}
+
                             <div class="form-group">
                                 <label for="recipient-name" class="col-form-label">カテゴリの名</label>
                                 <input type="text" name="name" class="form-control" id="recipient-name" required
@@ -299,37 +358,19 @@
         </div>
     </div>
     </div>
+
+
     <!-- endmodal -->
-
-    {{-- <!-- modal edit category -->
-        <div class="modal fade" id="edit-category-modal" tabindex="-1" role="dialog" aria-labelledby="category-modalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="category-modalLabel">編集</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="edit-add-form">
-                            <div class="form-group row">
-                                <label for="category-id" class="col-md-4 col-form-label">{{ __('カテゴリ') }}</label>
-                                <div class="col-md-12">
-                                    <select name="category_id" id="edit-category-id" class="form-control" required>
-                                        @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-        <!-- end modal edit category --> --}}
-
 @endsection
 
 @section('scripts')
     <!-- handle alert queue -->
+    <script>
+        $(function() {
+            $('#myList a:last-child').tab('show')
+        })
+
+    </script>
     <script>
         window.onload = function() {
             const alertQueue = localStorage.getItem('alert-queue');
@@ -372,35 +413,14 @@
                     $('#edit-category-id').val(res.category_id);
                     $('#edit-name').val(res.name);
                     $('#edit-description').val(res.description);
+                    $('#edit-add-form').attr('action', '/memos/' + id);
                 },
                 error: (error) => {
 
                 }
             });
-
-            $('#edit-add-form').on('submit', (event) => {
-                event.preventDefault();
-
-                const formValue = $('#edit-add-form').serializeArray();
-                const payload = formValue.reduce((s, v) => {
-                    s[v.name] = v.value;
-                    return s;
-                }, {});
-
-                $.ajax('/memos/' + id, {
-                    method: 'patch',
-                    data: payload, //update data
-                    success: function() {
-                        $('#edit-memo-modal').modal('toggle');
-                        localStorage.setItem('alert-queue', '編集しました。');
-                        location.reload();
-                    },
-                    error: (error) => {
-                        console.log(error);
-                    }
-                });
-            });
         }
 
     </script>
 @endsection
+
