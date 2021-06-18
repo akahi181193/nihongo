@@ -68,6 +68,7 @@ class MemoController extends Controller
             $row->name = $request->name;
             $row->category_id = $request->category_id;
             $row->description = $request->description;
+            $row->wordclass = $request->wordclass;
 
             if ($request->hasFile('images')) {
                 $destination_path = 'public/images/memos';
@@ -94,7 +95,7 @@ class MemoController extends Controller
                 $request->file('audio')->storeAs($destination_path, $audio_name);
                 $row->audio = $audio_name;
             }
-
+    
             $row->save();
         }
 

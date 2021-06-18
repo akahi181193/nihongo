@@ -64,6 +64,22 @@ class HomeController extends Controller
 
         return redirect()->back()->with('success', 'カテゴリを追加しました');
     }
+    public function update(Request $request, $id)
+    {
+        $row = Category::find($id);
+        if ($row) {
+            $row->name = $request->nameCategory;
+            $row->save();
+        }
+
+        return redirect()->back()->with('success', 'カテゴリを追加しました');
+    }
+    public function getCategoryById($id)
+    {
+        $category = Category::find($id);
+
+        return response()->json($category);
+    }
 }
 
 

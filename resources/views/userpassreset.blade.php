@@ -18,7 +18,7 @@
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('current password') }}</label>
 
                             <div class="col-md-6">
-                                <input class="form-control @error('email') is-invalid @enderror" name="current_password"  required autofocus>
+                                <input type="password" class="form-control @error('email') is-invalid @enderror" name="current_password"  required autofocus>
 
 
                             </div>

@@ -14,6 +14,7 @@ class Memo extends Model
         'category_id',
         'id',
         'user_id',
+        'wordclass',
         'name',
         'images',
         'audio',
