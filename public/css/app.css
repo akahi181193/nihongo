@@ -10111,9 +10111,9 @@ a.text-dark:focus {
         border-color: #dee2e6;
     }
 }
-.divThfloat{
+.fixmenu{
+    width: 120px; 
     white-space: nowrap;
-    width: 100px;
     overflow: hidden;
     text-overflow: ellipsis;
 }

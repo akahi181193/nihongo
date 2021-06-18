@@ -83,10 +83,10 @@ class UserProfileController extends Controller
         
         return redirect()->back()->with('success', '削除しました');
     }
-    public function reset(){
+    public function reset($id){
         return view('userpassreset');
     }
-    public function updatepass(Request $request ,$id){
+    public function updatepass(Request $request){
         $request->validate([
             'current_password' => ['required', new MatchOldPassword],
             'new_password' => ['required', 'string', 'min:6'],
@@ -94,9 +94,7 @@ class UserProfileController extends Controller
         ]);
    
         User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
-        $user = User::query()
-        ->where('id', '=', Auth::user()->id)
-        ->get();
+
         return redirect('home')->with('success', '編集しました');
         
         

@@ -41,9 +41,9 @@
                     </tr>
                         @foreach ($memos as $memo)
                             <tr>
-                                <td>{{ $memo->name }}</td>
-                                <td>{{ !empty($memo->category->name) ? $memo->category->name:'' }}</td>
-                                <td>{{ $memo->description }}</td>
+                                <td><div class="fixmenu">{{ $memo->name }}</div></td>
+                                <td><div class="fixmenu">{{ !empty($memo->category->name) ? $memo->category->name:'' }}</div></td>
+                                <td><div class="fixmenu">{{ $memo->description }}</div></td>
                                 <td> 
                                 @isset($memo->images)
                                         <img width="responssive" height="50px"

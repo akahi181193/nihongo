@@ -47,6 +47,7 @@
 
                     .description {
                         width: 150px;
+                        white-space: nowrap; 
                         text-overflow: ellipsis;
                         overflow-x: hidden;
                     }
@@ -66,11 +67,25 @@
                                     {{ $item->name }}
                                 </div>
                             </a>
-                            <div class="col-2">
+                            <div class="btn-group dropright col-2">
+                                <a class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+                                <div class="dropdown-menu">
+                                <ul class="list-group">
+                                <li class="list-group-item">
+                                    <button type="button" class="btn btn-primary btn-block w-100" onclick="editCategory({{$item-> id}})" data-toggle="modal" data-target="#edit-category-modal">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </li>
+                                <li class="list-group-item">
                                 <a style="color: #e3342f;" href="{{ route('categoryDelete', ['id' => $item->id]) }}">
                                     <i class="fas fa-trash"></i>
                                 </a>
+                                </li>
+                                </ul>
+                                   
+                                </div>
                             </div>
+  
                         </div>
                     @endforeach
                 </div>
@@ -90,6 +105,7 @@
                     <thead>
                         <tr>
                             <th scope="col"><div class="">タイトル</div></th>
+                            <th scope="col">品詞</th>
                             @if (!request()->get('category'))
                                 <th scope="col">カテゴリ</th>
                             @endif
@@ -111,11 +127,17 @@
                                     data-target="#edit-memo-modal">
                                     <div class="custom-link">{{ $memo->name }}</div>
                                 </td>
+                                <td scope="row">
+                                    <div class="wordclass">
+                                        {{ $memo->wordclass }}
+                                    </div>
+                                </td>
                                 @if (!request()->get('category'))
                                     <td scope="row" style="white-space: nowrap">
                                         {{ !empty($memo->category->name) ? $memo->category->name : ' 削除しました。' }}
                                     </td>
                                 @endif
+                               
                                 <td scope="row">
                                     <div class="description">
                                         {{ $memo->description }}
@@ -123,9 +145,11 @@
                                 </td>
                                 <td scope="row">
                                     @isset($memo->images)
-                                        <img width="responssive" height="50px"
-                                            src="{{ asset('storage/images/memos/' . $memo->images) }}"
-                                            enctype="multipart/form-data">
+                                        <a href="{{ asset('storage/images/memos/' . $memo->images) }}" data-lightbox="roadtrip">
+                                            <img width="responssive" height="50px"
+                                                src="{{ asset('storage/images/memos/' . $memo->images) }}"
+                                                enctype="multipart/form-data">
+                                        </a>
                                     @endisset
                                 </td>
                                 <td scope="row">
@@ -139,7 +163,7 @@
                                     <div class="modal-dialog modal-sm">
                                         <div class="modal-content">
                                             @isset($memo->audio)
-                                                <audio width="responssive" height="50px" controls>
+                                                <audio width="responsive" height="50px" controls>
                                                     <source src="{{ asset('storage/audio/memos/' . $memo->audio) }}"
                                                         type="audio/ogg">
                                                 </audio>
@@ -216,7 +240,6 @@
                         <form id="memo-add-form" action="{{ route('storeMemo') }}" method="POST"
                             enctype="multipart/form-data">
                             @csrf
-
                             <div class="form-group row">
                                 <label for="category-id" class="col-md-4 col-form-label">{{ __('カテゴリ') }}</label>
                                 <div class="col-md-12">
@@ -230,14 +253,22 @@
                                     </select>
                                 </div>
                             </div>
-
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label for="name" class="col-md-4 col-form-label">{{ '品詞' }}</label>
+                                        <select name="wordclass" id="wordclass" class="form-control">
+                                            <option value="động từ">động từ</option>
+                                            <option value="động từ">tính từ</option>
+                                            <option value="động từ">trạng từ</option>
+                                        </select>
+                                </div>
+                            </div>
                             <div class="form-group row">
                                 <label for="name" class="col-md-4 col-form-label">{{ 'タイトル' }}</label>
                                 <div class="col-md-12">
                                     <input type="text" name="name" id="name" required class="form-control">
                                 </div>
                             </div>
-
                             <div class="form-group row">
                                 <label for="description" class="col-md-4 col-form-label">{{ '内容' }}</label>
                                 <div class="col-md-12">
@@ -247,11 +278,15 @@
                             </div>
                             <div class="form-group row">
                                 <label for="images" class="col-md-4 col-form-label">{{ '写真' }}</label>
+                                <div class="col-md-12">
                                 <input type="file" name="images" id="images" class="form-control">
+                                </div>
                             </div>
                             <div class="form-group row">
                                 <label for="audio" class="col-md-4 col-form-label">{{ '音声' }}</label>
+                                <div class="col-md-12">
                                 <input type="file" name="audio" id="audio" class="form-control">
+                                </div>
                             </div>
 
                             <div class="row justify-content-center">
@@ -296,7 +331,12 @@
                                     <input type="text" name="name" id="edit-name" required class="form-control">
                                 </div>
                             </div>
-
+                            <div class="form-group row">
+                                <label for="wordclass" class="col-md-4 col-form-label">{{ '品詞' }}</label>
+                                <div class="col-md-12">
+                                    <input type="text" name="wordclass" id="edit-wordclass" class="form-control">
+                                </div>
+                            </div>
                             <div class="form-group row">
                                 <label for="description" class="col-md-4 col-form-label">{{ __('内容') }}</label>
                                 <div class="col-md-12">
@@ -304,7 +344,6 @@
                                         class="form-control"></textarea>
                                 </div>
                             </div>
-
                             <div class="form-group row">
                                 <label for="edit-image" class="col-md-4 col-form-label">{{ __('写真') }}</label>
                                 <input type="file" name="images" id="edit-image" class="form-control">
@@ -356,6 +395,41 @@
             </div>
 
         </div>
+
+        <!-- edit category modal -->
+       
+        <div class="modal fade" id="edit-category-modal" tabindex="-1" role="dialog" aria-labelledby="category-modalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="category-modalLabel">新規カテゴリを追加</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editCategory" action="/editCategory/" enctype="multipart/form-data" method="POST">
+                        @csrf
+                            
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">カテゴリの名</label>
+                                <input type="text" name="nameCategory" id="nameCategory"  class="form-control">
+                            </div>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+                            <button type="submit" class="btn btn-primary">更新</button>
+                    </div>
+                </div>
+                </form>
+            </div>
+
+        </div>
+        
+
+        <!-- end category -->
+
+
+
     </div>
     </div>
 
@@ -412,6 +486,7 @@
                 success: (res) => {
                     $('#edit-category-id').val(res.category_id);
                     $('#edit-name').val(res.name);
+                    $('#edit-wordclass').val(res.wordclass);
                     $('#edit-description').val(res.description);
                     $('#edit-add-form').attr('action', '/memos/' + id);
                 },
@@ -419,8 +494,34 @@
 
                 }
             });
+            
         }
 
     </script>
+    <script>
+    function editCategory(id) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            //res biếm callback function
+
+            $.ajax('/editCategory/' + id, {
+                success: (res) => {
+                    $('#nameCategory').val(res.nameCategory);
+                    $('#editCategory').attr('action', '/editCategory/' + id);
+                },
+                error: (error) => {
+
+                }
+            });
+            
+        }
+    
+    </script>
+
+
+
 @endsection
 

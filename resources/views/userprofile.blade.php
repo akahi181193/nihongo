@@ -34,8 +34,16 @@
 						<div class="text-center">
 							<img class="rounded" style="width: 100%;height: 100%;" src="{{ asset('storage/avatar/' . $users->avatar) }}  " alt="user profile">
 						</div>
-							
-							<div class="d-flex justify-content-end"><a href="{{ url('/deleteprofile/'.  Auth::user()->id )}}"><button type="button" class="btn btn-outline-danger"> <i class="fas fa-trash"></i></button></a></div>
+
+							<div class="d-flex justify-content-end">
+								<button type="button" class="btn btn-outline-primary">
+									<label for="avatar"style="margin: 0px;/* padding: 0px; */">
+									<i class="fas fa-edit"></i>
+									</label>
+								</button>
+
+								<a href="{{ url('/deleteprofile/'.  Auth::user()->id )}}"><button type="button" class="btn btn-outline-danger"> <i class="fas fa-trash"></i></button></a>
+							</div>
 							
 						</div>
 						<h5 class="user-name">{{ $users->name }}</h5>
@@ -44,7 +52,7 @@
 					<div class="about">
 						<h5 class="mb-2 text-primary">自己紹介</h5>
 						<p>{{ $users->about }}</p>
-						<a href="{{route('resetpass',['id'=>Auth::user()->id])}}">reset password</a>
+						
 					</div>
 				</div>
 			</div>
@@ -105,21 +113,7 @@
 							<label for="other">交際中</label>
 						</div>
 					</div>
-					<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-						<div class="form-group">
-							<label for="ciTy">プロフィール写真</label>
-							<input type="file" name="avatar" id="avatar" class="form-control" multiple>
-						</div>
-					</div>
-
-					<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-						<div class="form-group">
-							<label for="birthday">誕生</label>
-							<br>
-							<input type="date" id="birthday" name="birthday" value="{{ $users->birthday }}">
-						</div>
-					</div>
-
+							
 					<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 						<div class="form-group">
 								<label for="ciTy">自己紹介</label>
@@ -127,6 +121,15 @@
 								<textarea rows="4" cols="40" name="about" placeholder="Enter text here...">{{ $users->about }}</textarea>
 						</div>
 					</div>
+					<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+						<div class="form-group">
+							<label for="birthday">誕生</label>
+							<br>
+							<input type="date" id="birthday" name="birthday" value="{{ $users->birthday }}">
+						</div>
+					</div>
+					<input type="file" name="avatar" id="avatar" class="form-control" multiple style="display:none">
+					
 				</div>
 				<div class="row gutters">
 					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">

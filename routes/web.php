@@ -38,16 +38,17 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 
-    Route::get('/profile', [UserProfileController::class, 'store'])->name('profile');
+    Route::get('/profile/{id}', [UserProfileController::class, 'store'])->name('profile');
     Route::post('/updateprofile/{id}', [UserProfileController::class, 'update'])->name('updateprofile');
     Route::get('/deleteprofile/{id}', [UserProfileController::class, 'destroy'])->name('deleteprofile');
 
 
-    Route::get('/resetpass', [UserProfileController::class, 'reset'])->name('resetpass');
-    Route::post('/updatepass', [UserProfileController::class, 'updatepass'])->name('updatepass');
+    Route::get('/resetpass/{id}', [UserProfileController::class, 'reset'])->name('resetpass');
+    Route::post('/updatepass/{id}', [UserProfileController::class, 'updatepass'])->name('updatepass');
     
     // dùng post truyền dữ liệu theo mảng dạng form 
     Route::post('/category', [HomeController::class, 'store'])->name('storecategory');
+ 
     Route::post('/memos', [MemoController::class, 'store'])->name('storeMemo');
 
     // phải truyền tham số id vào {} để web hiểu đường dẫn cho phần edit , delete
@@ -67,4 +68,7 @@ Route::group(['middleware' => ['auth']], function () {
     // API
     Route::get('/memos/{id}', [MemoController::class, 'getMemoById'])->name('getMemoById');
     Route::post('/memos/{id}', [MemoController::class, 'update'])->name('updatememo');
+
+    Route::get('/editCategory/{id}', [HomeController::class, 'getCategoryById'])->name('getCategoryById');
+    Route::post('/editCategory/{id}', [HomeController::class, 'update'])->name('editCategory');
 });
