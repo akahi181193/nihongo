@@ -29,7 +29,7 @@
                         height: calc(100vh - 55px - 37px - 5rem - 37px);
                         overflow-y: auto;
 
-                        @media screen and (max-width: 768px) {}
+                        /* @media screen and (max-width: 768px) {} */
 
                     }
 
@@ -41,13 +41,21 @@
                         color: #212529;
                     }
 
+                    .list-group-item .action-group {
+                        display: none !important;
+                    }
+
+                    .list-group-item:hover .action-group {
+                        display: flex !important;
+                    }
+
                     .custom-list-item-active {
-                        color: #fff;        
+                        color: #fff;
                     }
 
                     .description {
                         width: 150px;
-                        white-space: nowrap; 
+                        white-space: nowrap;
                         text-overflow: ellipsis;
                         overflow-x: hidden;
                     }
@@ -55,37 +63,26 @@
                     .custom-link {
                         cursor: pointer;
                     }
-
                 </style>
                 <div id="list-category" class="list-group mt-3">
                     @foreach ($categories as $item)
                         <div class="list-group-item list-group-item-action {{ request()->get('category') == $item->id ? 'active' : '' }}"
                             style="display: flex; flex-flow: row;">
-                            <a class="col-10" style="text-decoration: none;" href="/home?category={{ $item->id }}">
+                            <a class="col-8" style="text-decoration: none;" href="/home?category={{ $item->id }}">
                                 <div
                                     class="custom-list-item{{ request()->get('category') == $item->id ? '-active' : '' }}">
                                     {{ $item->name }}
                                 </div>
                             </a>
-                            <div class="btn-group dropright col-2">
-                                <a class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
-                                <div class="dropdown-menu">
-                                <ul class="list-group">
-                                <li class="list-group-item">
-                                    <button type="button" class="btn btn-primary btn-block w-100" onclick="editCategory({{$item-> id}})" data-toggle="modal" data-target="#edit-category-modal">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                </li>
-                                <li class="list-group-item">
-                                <a style="color: #e3342f;" href="{{ route('categoryDelete', ['id' => $item->id]) }}">
+                            <div class="action-group btn-group col-4"
+                                style="display: flex; align-items: center; padding: 0; justify-content: flex-end">
+                                <i style="cursor: pointer" onclick="editCategory({{ $item->id }})" data-toggle="modal"
+                                    data-target="#edit-category-modal" class="fas fa-edit"></i>
+                                <a style="color: #e3342f; margin-left: 4px;"
+                                    href="{{ route('categoryDelete', ['id' => $item->id]) }}">
                                     <i class="fas fa-trash"></i>
                                 </a>
-                                </li>
-                                </ul>
-                                   
-                                </div>
                             </div>
-  
                         </div>
                     @endforeach
                 </div>
@@ -104,7 +101,9 @@
                 <table class="table table-striped mt-3" id="">
                     <thead>
                         <tr>
-                            <th scope="col"><div class="">タイトル</div></th>
+                            <th scope="col">
+                                <div class="">タイトル</div>
+                            </th>
                             <th scope="col">品詞</th>
                             @if (!request()->get('category'))
                                 <th scope="col">カテゴリ</th>
@@ -137,7 +136,7 @@
                                         {{ !empty($memo->category->name) ? $memo->category->name : ' 削除しました。' }}
                                     </td>
                                 @endif
-                               
+
                                 <td scope="row">
                                     <div class="description">
                                         {{ $memo->description }}
@@ -145,7 +144,8 @@
                                 </td>
                                 <td scope="row">
                                     @isset($memo->images)
-                                        <a href="{{ asset('storage/images/memos/' . $memo->images) }}" data-lightbox="roadtrip">
+                                        <a href="{{ asset('storage/images/memos/' . $memo->images) }}"
+                                            data-lightbox="roadtrip">
                                             <img width="responssive" height="50px"
                                                 src="{{ asset('storage/images/memos/' . $memo->images) }}"
                                                 enctype="multipart/form-data">
@@ -157,6 +157,7 @@
                                         <i class="fas fa-play-circle"></i>
                                     </a>
                                 </td>
+                                
                                 <!-- audiomodal -->
                                 <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"
                                     aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -176,8 +177,8 @@
 
                                 <!-- edit button  -->
                                 <td>
-                                    <a onclick="onEditButton({{ $memo->id }})" class="text-primary custom-link" data-toggle="modal"
-                                        data-target="#edit-memo-modal">
+                                    <a onclick="onEditButton({{ $memo->id }})" class="text-primary custom-link"
+                                        data-toggle="modal" data-target="#edit-memo-modal">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <!-- delete button  -->
@@ -246,8 +247,9 @@
                                     <select name="category_id" id="category-id" class="form-control" required>
                                         <option value="">カテゴリを選択</option>
                                         @foreach ($categories as $category)
-                                            <option @if (request()->get('category') == $category->id) selected="selected" @endif value="{{$category->id}}">
-                                                {{$category->name}}
+                                            <option @if (request()->get('category') == $category->id) selected="selected" @endif
+                                                value="{{ $category->id }}">
+                                                {{ $category->name }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -256,11 +258,15 @@
                             <div class="form-group row">
                                 <div class="col-md-12">
                                     <label for="name" class="col-md-4 col-form-label">{{ '品詞' }}</label>
-                                        <select name="wordclass" id="wordclass" class="form-control">
-                                            <option value="động từ">động từ</option>
-                                            <option value="động từ">tính từ</option>
-                                            <option value="động từ">trạng từ</option>
-                                        </select>
+                                    <select name="wordclass" id="wordclass" class="form-control">
+                                        <option value="名詞">名詞</option>
+                                        <option value="動詞">動詞</option>
+                                        <option value="形容詞">形容詞</option>
+                                        <option value="副詞">副詞</option>
+                                        <option value="接続詞">接続詞</option>
+                                        <option value="感動詞">感動詞</option>
+                                        <option value="助動詞">助動詞</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -279,13 +285,13 @@
                             <div class="form-group row">
                                 <label for="images" class="col-md-4 col-form-label">{{ '写真' }}</label>
                                 <div class="col-md-12">
-                                <input type="file" name="images" id="images" class="form-control">
+                                    <input type="file" name="images" id="images" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="audio" class="col-md-4 col-form-label">{{ '音声' }}</label>
                                 <div class="col-md-12">
-                                <input type="file" name="audio" id="audio" class="form-control">
+                                    <input type="file" name="audio" id="audio" class="form-control">
                                 </div>
                             </div>
 
@@ -332,9 +338,17 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="wordclass" class="col-md-4 col-form-label">{{ '品詞' }}</label>
                                 <div class="col-md-12">
-                                    <input type="text" name="wordclass" id="edit-wordclass" class="form-control">
+                                    <label for="name" class="col-md-4 col-form-label">{{ '品詞' }}</label>
+                                    <select name="wordclass" id="wordclass" class="form-control">
+                                        <option value="noun">名詞</option>
+                                        <option value="verb">動詞</option>
+                                        <option value="adjective">形容詞</option>
+                                        <option value="adverb">副詞</option>
+                                        <option value="conjunction">接続詞</option>
+                                        <option value="interjection">感動詞</option>
+                                        <option value="auxiliary verb">助動詞</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -397,7 +411,7 @@
         </div>
 
         <!-- edit category modal -->
-       
+
         <div class="modal fade" id="edit-category-modal" tabindex="-1" role="dialog" aria-labelledby="category-modalLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -410,11 +424,11 @@
                     </div>
                     <div class="modal-body">
                         <form id="editCategory" action="/editCategory/" enctype="multipart/form-data" method="POST">
-                        @csrf
-                            
+                            @csrf
+
                             <div class="form-group">
                                 <label for="recipient-name" class="col-form-label">カテゴリの名</label>
-                                <input type="text" name="nameCategory" id="nameCategory"  class="form-control">
+                                <input type="text" name="name" id="nameCategory" class="form-control">
                             </div>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
                             <button type="submit" class="btn btn-primary">更新</button>
@@ -424,7 +438,7 @@
             </div>
 
         </div>
-        
+
 
         <!-- end category -->
 
@@ -439,12 +453,6 @@
 
 @section('scripts')
     <!-- handle alert queue -->
-    <script>
-        $(function() {
-            $('#myList a:last-child').tab('show')
-        })
-
-    </script>
     <script>
         window.onload = function() {
             const alertQueue = localStorage.getItem('alert-queue');
@@ -494,12 +502,12 @@
 
                 }
             });
-            
+
         }
 
     </script>
     <script>
-    function editCategory(id) {
+        function editCategory(id) {
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -507,21 +515,20 @@
             });
             //res biếm callback function
 
-            $.ajax('/editCategory/' + id, {
+            $.ajax('/categories/' + id, {
                 success: (res) => {
-                    $('#nameCategory').val(res.nameCategory);
-                    $('#editCategory').attr('action', '/editCategory/' + id);
+                    $('#nameCategory').val(res.name);
+                    $('#editCategory').attr('action', '/categories/' + id);
                 },
                 error: (error) => {
 
                 }
             });
-            
+
         }
-    
+
     </script>
 
 
 
 @endsection
-

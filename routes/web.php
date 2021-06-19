@@ -69,6 +69,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/memos/{id}', [MemoController::class, 'getMemoById'])->name('getMemoById');
     Route::post('/memos/{id}', [MemoController::class, 'update'])->name('updatememo');
 
-    Route::get('/editCategory/{id}', [HomeController::class, 'getCategoryById'])->name('getCategoryById');
-    Route::post('/editCategory/{id}', [HomeController::class, 'update'])->name('editCategory');
+    Route::get('/categories/{id}', [HomeController::class, 'getCategoryById'])->name('getCategoryById');
+    Route::post('/categories/{id}', [HomeController::class, 'update'])->name('editCategory');
 });

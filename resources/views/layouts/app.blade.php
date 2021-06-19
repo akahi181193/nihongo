@@ -54,15 +54,8 @@
                             <li class="nav-item">
                               <a class="nav-link active" aria-current="page" href="{{ url('/') }}">ホーム</a>
                             </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    ツール</a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" href="#">チャットボット</a></li>
-                                    <li><a class="dropdown-item" href="#">通訳</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="{{route('trashes')}}">ゴミ箱</a></li>
-                                  </ul>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('trashes')}}">ゴミ箱</a></li>
                             </li>
                             <li class="nav-item">
                               <a class="nav-link" href={{'/about'}}>チーム概要</a>
@@ -79,12 +72,12 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('profile',['id' => Auth::user()->id ]) }}"> profifle</a>
-                                    <a class="dropdown-item" href="{{route('resetpass',['id'=>Auth::user()->id])}}">Change Password</a>
+                                    <a class="dropdown-item" href="{{ route('profile',['id' => Auth::user()->id ]) }}">プロフィール</a>
+                                    <a class="dropdown-item" href="{{route('resetpass',['id'=>Auth::user()->id])}}">パスワードを変更する</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        {{ __('ログアウト') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
