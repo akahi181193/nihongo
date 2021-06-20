@@ -1,14 +1,11 @@
 <?php
   
 namespace App\Http\Controllers;
-  
-use Illuminate\Http\Request;
+
 use Laravel\Socialite\Facades\Socialite;
 use Exception;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Category;
-use Illuminate\Support\Facades\Hash;
   
 class GoogleController extends Controller
 {
