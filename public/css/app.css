@@ -10117,3 +10117,21 @@ a.text-dark:focus {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+#table-body td:last-child div{
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s linear;
+}
+#table-body tr:hover> td:last-child div{
+    visibility: visible;
+    opacity: 1;
+}
+.showAudio a{
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s linear;
+}
+#table-body tr:hover> .showAudio a{
+    visibility: visible;
+    opacity: 1;
+}

@@ -4,11 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Category;
-use App\Models\Memo;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Rules\MatchOldPassword;
 
@@ -30,7 +27,7 @@ class UserProfileController extends Controller
     public function update(Request $request, $id){
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'about' => ['string', 'max:355'],
+            'about' => ['max:355'],
             
         ]);
         $row = User::find($id);

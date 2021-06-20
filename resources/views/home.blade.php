@@ -177,14 +177,16 @@
 
                                 <!-- edit button  -->
                                 <td>
-                                    <a onclick="onEditButton({{ $memo->id }})" class="text-primary custom-link"
-                                        data-toggle="modal" data-target="#edit-memo-modal">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <!-- delete button  -->
-                                    <a class="text-danger ml-5 custom-link" data-toggle="modal" data-target="#delete-Modal">
-                                        <i class="fas fa-trash"></i>
-                                    </a>
+                                    <div>
+                                        <a onclick="onEditButton({{ $memo->id }})" class="text-primary custom-link"
+                                            data-toggle="modal" data-target="#edit-memo-modal">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <!-- delete button  -->
+                                        <a class="text-danger ml-5 custom-link" data-toggle="modal" data-target="#delete-Modal">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                        </div>
                                 </td>
                             </tr>
                             {{-- Delete Modal --}}
@@ -283,16 +285,15 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="images" class="col-md-4 col-form-label">{{ '写真' }}</label>
-                                <div class="col-md-12">
-                                    <input type="file" name="images" id="images" class="form-control">
+                                <div class="col-6">
+                                    <label for="edit-image" class="col-md-4 col-form-label">{{ __('写真') }}</label>
+                                    <input type="file" name="images" id="edit-image" class="form-control ">
+                                </div>
+                                <div class="col-6"> 
+                                    <label for="edit-audio" class="col-md-4 col-form-label">{{ '音声' }}</label>
+                                    <input type="file" name="audio" id="edit-audio" class="form-control">
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label for="audio" class="col-md-4 col-form-label">{{ '音声' }}</label>
-                                <div class="col-md-12">
-                                    <input type="file" name="audio" id="audio" class="form-control">
-                                </div>
                             </div>
 
                             <div class="row justify-content-center">
