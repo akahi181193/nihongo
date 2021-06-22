@@ -87,10 +87,10 @@
 					<strong>{{ $message }}</strong>
 				</span>
 				@enderror
-				<div class="flex items-center justify-end mt-4">
-					<a href="{{ url('auth/google') }}">
-						<img src="https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png" style="margin-left: 3em;">
-					</div>
+				<div class="social-container">
+					<a href="#" class="social"><i class="fab fa-facebook"></i></a>
+					<a href="{{ url('auth/google') }}" class="social"><i class="fab fa-google-plus-g"></i></a>
+				</div>
 				
 				@if (Route::has('password.request'))
 				<a class="btn btn-link pl-0" href="{{ route('password.request') }}">
