@@ -116,9 +116,9 @@
 							
 					<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 						<div class="form-group">
-								<label for="ciTy">自己紹介</label>
+								<label for="about">自己紹介</label>
 								<br>
-								<textarea rows="4" cols="40" name="about" placeholder="Enter text here...">{{ $users->about }}</textarea>
+								<textarea class="form-control" rows="4" name="about" placeholder="Enter text here...">{{ $users->about }}</textarea>
 						</div>
 					</div>
 					<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
