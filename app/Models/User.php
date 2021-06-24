@@ -27,7 +27,9 @@ class User extends Authenticatable
         'social',
         'about',
         'password',
-        'google_id'
+        'google_id',
+        'github_id',
+        'facebook_id'
     ];
 
     /**
@@ -49,4 +51,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected $appends = [
+        'profile_photo_url',
+    ];
+
 }

@@ -8,7 +8,8 @@ use App\Http\Controllers\MemoController;
 use App\Http\Controllers\TrashController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\GoogleController;
-use App\Http\Controllers\MatchOldPassword;
+use App\Http\Controllers\FacebookController;
+use App\Http\Controllers\GithubController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,12 +34,23 @@ route::get('/about', function () {
 });
 
 Auth::routes();
+
+// -----Link to Google Account------
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
 Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
+// -----Link to Facebook Account------
+Route::get('auth/facebook', [FacebookController::class, 'redirectToFacebook']);
+Route::get('auth/facebook/callback', [FacebookController::class, 'handleFacebookCallback']);
+
+// -----Link to GitHub Account------
+Route::get('auth/github', [GithubController::class, 'redirectToGithub']);
+Route::get('auth/github/callback', [GithubController::class, 'handleGithubCallback']);
+
+// -----Link to User Account------
 Route::group(['middleware' => ['auth']], function () {
     
-    // trả về dashboard sau khi dang nhap
+    // // -----After confirm login back to home------
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     
 

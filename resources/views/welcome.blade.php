@@ -88,8 +88,9 @@
                 </span>
                 @enderror
                 <div class="social-container">
-                    <a href="#" class="social"><i class="fab fa-facebook"></i></a>
-                    <a href="{{ url('auth/google') }}" class="social"><i class="fab fa-google-plus-g"></i></a>
+                    <a href="{{ url('auth/facebook') }}" class="social"><i class="fab fa-facebook"></i></a>
+                    <a href="{{ url('auth/google') }}" class="social"><i class="fab fa-google"></i></a>
+                    <a href="{{ url('auth/github') }}" class="social"><i class="fab fa-github"></i></a>
                 </div>
 
                 @if (Route::has('password.request'))
