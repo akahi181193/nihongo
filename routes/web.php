@@ -22,6 +22,10 @@ use App\Http\Controllers\GithubController;
 |
 */
 
+
+//Language
+Route::get('lang/{lang}', ['as' => 'lang.switch', 'uses' => 'App\Http\Controllers\LanguageController@switchLang']);
+
 Route::get('/', function () {
     //trở về sau khi middleware
     return view('welcome');

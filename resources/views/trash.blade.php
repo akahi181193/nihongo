@@ -9,7 +9,7 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th colspan="1" scope="col">カテゴリ</th>
+                            <th colspan="1" scope="col">{{__('category')}}</th>
                             <th colspan="1" scope="col"></th>
                         </tr>
                     </thead>
@@ -32,12 +32,12 @@
                 <table class="table table-striped" id="">
                     <tbody id="table-body">
                         <tr>
-                            <th scope="col">タイトル</th>
-                            <th scope="col">品詞</th>
-                            <th scope="col">カテゴリ</th>
-                            <th scope="col">内容</th>
-                            <th scope="col">写真</th>
-                            <th scope="col">音声</th>
+                            <th scope="col">{{__('title')}}</th>
+                            <th scope="col">{{__('a part of speech')}}</th>
+                            <th scope="col">{{__('category')}}</th>
+                            <th scope="col">{{__('content')}}</th>
+                            <th scope="col">{{__('images')}}</th>
+                            <th scope="col">{{__('audio')}}</th>
                             <th scope="col">
                         </tr>
                         @foreach ($memos as $memo)

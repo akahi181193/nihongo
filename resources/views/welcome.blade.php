@@ -25,9 +25,9 @@
                 @csrf
 
 
-                <h1>Create Account</h1>
-                <span>or use your email for registration</span>
-                <input id="name" type="text" placeholder="Name" class="form-control @error('name') is-invalid @enderror"
+                <h1>{{__('Create Account')}}</h1>
+                <span>{{__('or use your email for registration')}}</span>
+                <input id="name" type="text" placeholder="{{__('Name')}}" class="form-control @error('name') is-invalid @enderror"
                     name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
                 @error('name')
                 <span class="invalid-feedback" role="alert">
@@ -35,7 +35,7 @@
                 </span>
                 @enderror
 
-                <input id="email" type="email" placeholder="Email"
+                <input id="email" type="email" placeholder="{{_('Email')}}"
                     class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}"
                     required autocomplete="email">
                 @error('email')
@@ -44,7 +44,7 @@
                 </span>
                 @enderror
 
-                <input id="password" type="password" placeholder="Password"
+                <input id="password" type="password" placeholder="{{__('Password')}}"
                     class="form-control @error('password') is-invalid @enderror" name="password" required
                     autocomplete="new-password">
                 @error('password')
@@ -54,11 +54,11 @@
                 @enderror
 
 
-                <input id="password-confirm" type="password" placeholder="Confirm Password" class="form-control"
+                <input id="password-confirm" type="password" placeholder="{{_('Confirm Password')}}" class="form-control"
                     name="password_confirmation" required autocomplete="new-password">
 
 
-                <button type="submit">Sign Up</button>
+                <button type="submit">{{__('Sign Up')}}</button>
             </form>
         </div>
 
@@ -68,10 +68,10 @@
             <form action="{{ route('login') }}" class="mt-4" method="post">
                 @csrf
 
-                <h1>Sign in</h1>
+                <h1>{{__('Sign In')}}</h1>
 
 
-                <input type="email" placeholder="Email" class="form-control @error('email') is-invalid @enderror"
+                <input type="email" placeholder="{{__('Email')}}" class="form-control @error('email') is-invalid @enderror"
                     name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                 @error('email')
                 <span class="invalid-feedback" role="alert">
@@ -79,7 +79,7 @@
                 </span>
                 @enderror
 
-                <input placeholder="Password" id="password" type="password"
+                <input placeholder="{{__('Password')}}" id="password" type="password"
                     class="form-control @error('password') is-invalid @enderror" name="password" required
                     autocomplete="current-password">
                 @error('password')
@@ -95,12 +95,12 @@
 
                 @if (Route::has('password.request'))
                 <a class="btn btn-link pl-0" href="{{ route('password.request') }}">
-                    Forgot your password?
+                    {{__('Forgot your password?')}}
                 </a>
                 @endif
 
 
-                <button type="submit">Sign In</button>
+                <button type="submit">{{__('Sign In')}}</button>
             </form>
         </div>
         <div class="overlay-container">
@@ -108,12 +108,12 @@
                 <div class="overlay-panel overlay-left">
                     <h1>NihongoMemo</h1>
                     <p>Start to keep your Japanese's memos. Simply just sign up a new account in seconds</p>
-                    <button class="ghost" id="signIn">Sign In</button>
+                    <button class="ghost" id="signIn">{{__('Sign In')}}</button>
                 </div>
                 <div class="overlay-panel overlay-right">
                     <h1>NihongoMemo</h1>
                     <p>The simplest way to keep your Japanese's memos in everywhere</p>
-                    <button class="ghost" id="signUp">Sign Up</button>
+                    <button class="ghost" id="signUp">{{__('Sign Up')}}</button>
                 </div>
             </div>
         </div>
@@ -124,5 +124,17 @@
 <div class="footer">
     <p>Copyright &copy; NAL 2021</p>
 </div>
-
+<!-- Language -->
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        {{ Config::get('languages')[App::getLocale()] }}
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+    @foreach (Config::get('languages') as $lang => $language)
+        @if ($lang != App::getLocale())
+                <a class="dropdown-item" href="{{ route('lang.switch', $lang) }}"> {{$language}}</a>
+        @endif
+    @endforeach
+    </div>
+</li>
 </html>

@@ -30,8 +30,8 @@
     </div>
     <!-- start search form -->
     <form class="form-inline" method="GET" action="{{ url('/home')}}">
-        <input class="form-control mr-sm-2" value="{{ request()->get('keyword') }}" type="text" name="keyword" placeholder="タイトル検索" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        <input class="form-control mr-sm-2" value="{{ request()->get('keyword') }}" type="text" name="keyword" placeholder="{{__('search title')}}" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">{{__('search')}}</button>
     </form>
     <!-- end search form -->
 </nav> --}}
