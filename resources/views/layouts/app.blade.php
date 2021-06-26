@@ -51,14 +51,26 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                              <a class="nav-link active" aria-current="page" href="{{ url('/') }}">ホーム</a>
+                             <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{ Config::get('languages')[App::getLocale()] }}
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                @foreach (Config::get('languages') as $lang => $language)
+                                    @if ($lang != App::getLocale())
+                                            <a class="dropdown-item" href="{{ route('lang.switch', $lang) }}"> {{$language}}</a>
+                                    @endif
+                                @endforeach
+                                </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('trashes')}}">ゴミ箱</a></li>
+                              <a class="nav-link active" aria-current="page" href="{{ url('/') }}">{{__('home')}}</a>
                             </li>
                             <li class="nav-item">
-                              <a class="nav-link" href={{'/about'}}>チーム概要</a>
+                                <a class="nav-link" href="{{route('trashes')}}">{{__('recycle bin')}}</a></li>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link" href={{'/about'}}>{{__('team')}}</a>
                             </li>
                             </li>
                           </ul>
@@ -72,12 +84,12 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('profile',['id' => Auth::user()->id ]) }}">プロフィール</a>
-                                    <a class="dropdown-item" href="{{route('resetpass',['id'=>Auth::user()->id])}}">パスワードを変更する</a>
+                                    <a class="dropdown-item" href="{{ route('profile',['id' => Auth::user()->id ]) }}">{{__('profile')}}</a>
+                                    <a class="dropdown-item" href="{{route('resetpass',['id'=>Auth::user()->id])}}">{{__('resetpass')}}</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('ログアウト') }}
+                                        {{ __('logout') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

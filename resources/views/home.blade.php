@@ -20,7 +20,7 @@
                 <button type="button" class="btn btn-primary btn-block w-100" data-toggle="modal"
                     data-target="#category-modal">
                     <i class="far fa-plus-square"></i>
-                    <span class="ml-1">新規 カテゴリ</span>
+                    <span class="ml-1">{{__('new category')}}</span>
                 </button>
             </div>
             <style>
@@ -91,10 +91,10 @@
         <div class="memos col-md-9 mt-sm-3 mt-3 mt-md-0 mt-lg-0">
             <form class="form-inline w-100 justify-content-center" method="GET" action="{{ url('/home') }}">
                 <input class="form-control col-md-6 col-sm-8 col-xs-11" value="{{ request()->get('keyword') }}"
-                    type="text" name="keyword" placeholder="タイトル" aria-label="Search">
+                    type="text" name="keyword" placeholder="{{__('title')}}" aria-label="Search">
                 <button
                     class="btn btn-outline-success ml-0 ml-sm-1 ml-md-1 ml-lg-1 col-md-2 col-sm-3 col-xs-3 mt-1 mt-sm-0 mt-md-0 mt-lg-0"
-                    type="submit">検索</button>
+                    type="submit">{{__('search')}}</button>
             </form>
 
 
@@ -102,19 +102,19 @@
                 <thead>
                     <tr>
                         <th scope="col">
-                            <div class="">タイトル</div>
+                            <div class="">{{__('title')}}</div>
                         </th>
-                        <th scope="col">品詞</th>
+                        <th scope="col">{{__('a part of speech')}}</th>
                         @if (!request()->get('category'))
-                        <th scope="col">カテゴリ</th>
+                        <th scope="col">{{__('category')}}</th>
                         @endif
-                        <th scope="col">内容</th>
-                        <th scope="col">写真</th>
-                        <th scope="col">音声</th>
+                        <th scope="col">{{__('content')}}</th>
+                        <th scope="col">{{__('images')}}</th>
+                        <th scope="col">{{__('audio')}}</th>
                         <th scope="col">
                             <a class="btn btn-outline-primary" data-toggle="modal" data-target="#add-memo-modal">
                                 <i class="far fa-plus-square"></i>
-                                <span class="ml-1">追加</span>
+                                <span class="ml-1">{{__('add')}}</span>
                             </a>
                         </th>
                     </tr>
@@ -194,18 +194,19 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">削除</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">{{__('delete')}}</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    この {{ $memo->name }}　削除してよろしいでしょうか?
+                                    {{__('do you want to delete this?')}}<br>
+                                    {{ $memo->name }}
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">キャンセル</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('cancle')}}</button>
                                     <a href="{{ route('delete-memo', ['id' => $memo->id]) }}"><button type="button"
-                                            class="btn btn-danger">削除</button></a>
+                                            class="btn btn-danger">{{__('delete')}}</button></a>
                                 </div>
                             </div>
                         </div>
@@ -232,7 +233,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="category-modalLabel">メモ新規登録</h5>
+                    <h5 class="modal-title" id="category-modalLabel">{{__('Memo new registration')}}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -242,10 +243,10 @@
                         enctype="multipart/form-data">
                         @csrf
                         <div class="form-group row">
-                            <label for="category-id" class="col-md-4 col-form-label">{{ __('カテゴリ') }}</label>
+                            <label for="category-id" class="col-md-4 col-form-label">{{ __('category') }}</label>
                             <div class="col-md-12">
                                 <select name="category_id" id="category-id" class="form-control" required>
-                                    <option value="">カテゴリを選択</option>
+                                    <option value="">{{__('select a category')}}</option>
                                     @foreach ($categories as $category)
                                     <option @if (request()->get('category') == $category->id) selected="selected" @endif
                                         value="{{ $category->id }}">
@@ -257,43 +258,43 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <label for="name" class="col-md-4 col-form-label">{{ '品詞' }}</label>
+                                <label for="name" class="col-md-4 col-form-label">{{__('a part of speech') }}</label>
                                 <select name="wordclass" id="wordclass" class="form-control">
-                                    <option value="名詞">名詞</option>
-                                    <option value="動詞">動詞</option>
-                                    <option value="形容詞">形容詞</option>
-                                    <option value="副詞">副詞</option>
-                                    <option value="接続詞">接続詞</option>
-                                    <option value="感動詞">感動詞</option>
-                                    <option value="助動詞">助動詞</option>
+                                    <option value="名詞">{{__('noun') }}</option>
+                                    <option value="動詞">{{__('verb') }}</option>
+                                    <option value="形容詞">{{__('adjective') }}</option>
+                                    <option value="副詞">{{__('adverb') }}</option>
+                                    <option value="接続詞">{{__('conjunction') }}</option>
+                                    <option value="感嘆詞">{{__('interjection') }}</option>
+                                    <option value="助動詞">{{__('Auxiliary verb')}}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label">{{ 'タイトル' }}</label>
+                            <label for="name" class="col-md-4 col-form-label">{{__('title') }}</label>
                             <div class="col-md-12">
                                 <input type="text" name="name" id="name" required class="form-control">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="description" class="col-md-4 col-form-label">{{ '内容' }}</label>
+                            <label for="description" class="col-md-4 col-form-label">{{__('content') }}</label>
                             <div class="col-md-12">
                                 <textarea name="description" id="description" rows="3" required
                                     class="form-control"></textarea>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="edit-image" class="col-md-4 col-form-label">{{ __('写真') }}</label>
+                            <label for="edit-image" class="col-md-4 col-form-label">{{ __('images') }}</label>
                             <input type="file" name="images" id="edit-image" class="form-control">
                         </div>
 
                         <div class="form-group row">
-                            <label for="edit-audio" class="col-md-4 col-form-label">{{ '音声' }}</label>
+                            <label for="edit-audio" class="col-md-4 col-form-label">{{__('audio') }}</label>
                             <input type="file" name="audio" id="edit-audio" class="form-control">
                         </div>
 
                         <div class="row justify-content-center">
-                            <button style="min-width: 100px" type="submit" class="btn btn-primary">追加</button>
+                            <button style="min-width: 100px" type="submit" class="btn btn-primary">{{__('add') }}</button>
                         </div>
                     </form>
 
@@ -309,7 +310,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="category-modalLabel">編集</h5>
+                    <h5 class="modal-title" id="category-modalLabel">{{__('edit') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -318,7 +319,7 @@
                     <form id="edit-add-form" method="POST" action="/memos/" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group row">
-                            <label for="category-id" class="col-md-4 col-form-label">{{ __('カテゴリ') }}</label>
+                            <label for="category-id" class="col-md-4 col-form-label">{{ __('category') }}</label>
                             <div class="col-md-12">
                                 <select name="category_id" id="edit-category-id" class="form-control" required>
                                     @foreach ($categories as $category)
@@ -329,44 +330,44 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label">{{ 'タイトル' }}</label>
+                            <label for="name" class="col-md-4 col-form-label">{{__('title') }}</label>
                             <div class="col-md-12">
                                 <input type="text" name="name" id="edit-name" required class="form-control">
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <label for="name" class="col-md-4 col-form-label">{{ '品詞' }}</label>
+                                <label for="name" class="col-md-4 col-form-label">{{__('a part of speech') }}</label>
                                 <select name="wordclass" id="wordclass" class="form-control">
-                                    <option value="noun">名詞</option>
-                                    <option value="verb">動詞</option>
-                                    <option value="adjective">形容詞</option>
-                                    <option value="adverb">副詞</option>
-                                    <option value="conjunction">接続詞</option>
-                                    <option value="interjection">感動詞</option>
-                                    <option value="auxiliary verb">助動詞</option>
+                                <option value="名詞">{{__('noun') }}</option>
+                                    <option value="動詞">{{__('verb') }}</option>
+                                    <option value="形容詞">{{__('adjective') }}</option>
+                                    <option value="副詞">{{__('adverb') }}</option>
+                                    <option value="接続詞">{{__('conjunction') }}</option>
+                                    <option value="感動詞">{{__('interjection') }}</option>
+                                    <option value="助動詞">{{__('Auxiliary verb')}}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="description" class="col-md-4 col-form-label">{{ __('内容') }}</label>
+                            <label for="description" class="col-md-4 col-form-label">{{ __('content') }}</label>
                             <div class="col-md-12">
                                 <textarea name="description" id="edit-description" rows="3" required
                                     class="form-control"></textarea>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="edit-image" class="col-md-4 col-form-label">{{ __('写真') }}</label>
+                            <label for="edit-image" class="col-md-4 col-form-label">{{ __('images') }}</label>
                             <input type="file" name="images" id="edit-image" class="form-control">
                         </div>
 
                         <div class="form-group row">
-                            <label for="edit-audio" class="col-md-4 col-form-label">{{ '音声' }}</label>
+                            <label for="edit-audio" class="col-md-4 col-form-label">{{ __('audio') }}</label>
                             <input type="file" name="audio" id="edit-audio" class="form-control">
                         </div>
 
                         <div class="row justify-content-center">
-                            <button style="min-width: 100px" type="submit" class="btn btn-primary">更新</button>
+                            <button style="min-width: 100px" type="submit" class="btn btn-primary">{{ __('update') }}</button>
                         </div>
                     </form>
 
@@ -383,7 +384,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="category-modalLabel">新規カテゴリを追加</h5>
+                    <h5 class="modal-title" id="category-modalLabel">{{ __('add new category') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -394,12 +395,12 @@
                         {{ csrf_field() }}
 
                         <div class="form-group">
-                            <label for="recipient-name" class="col-form-label">カテゴリの名</label>
+                            <label for="recipient-name" class="col-form-label">{{ __('category name') }}</label>
                             <input type="text" name="name" class="form-control" id="recipient-name" required
                                 class="form-control">
                         </div>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
-                        <button type="submit" class="btn btn-primary">追加</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('close') }}</button>
+                        <button type="submit" class="btn btn-primary">{{ __('add') }}</button>
                 </div>
             </div>
             </form>
@@ -414,7 +415,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="category-modalLabel">新規カテゴリを追加</h5>
+                    <h5 class="modal-title" id="category-modalLabel">{{ __('add new category') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -424,11 +425,11 @@
                         @csrf
 
                         <div class="form-group">
-                            <label for="recipient-name" class="col-form-label">カテゴリの名</label>
+                            <label for="recipient-name" class="col-form-label">{{ __('category name') }}</label>
                             <input type="text" name="name" id="nameCategory" class="form-control">
                         </div>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
-                        <button type="submit" class="btn btn-primary">更新</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('close') }}</button>
+                        <button type="submit" class="btn btn-primary">{{ __('update') }}</button>
                 </div>
             </div>
             </form>
