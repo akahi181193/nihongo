@@ -54,7 +54,7 @@
                 @enderror
 
 
-                <input id="password-confirm" type="password" placeholder="{{_('Confirm Password')}}" class="form-control"
+                <input id="password-confirm" type="password" placeholder="{{__('Confirm Password')}}" class="form-control"
                     name="password_confirmation" required autocomplete="new-password">
 
 
@@ -121,20 +121,19 @@
 
 </body>
 
-<div class="footer">
-    <p>Copyright &copy; NAL 2021</p>
-</div>
 <!-- Language -->
-<li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+<footer style="background-color: #3490dc;">
+<div class="row">
+    <a class="nav-link dropdown-toggle" style="color: white;" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         {{ Config::get('languages')[App::getLocale()] }}
     </a>
-    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
     @foreach (Config::get('languages') as $lang => $language)
         @if ($lang != App::getLocale())
-                <a class="dropdown-item" href="{{ route('lang.switch', $lang) }}"> {{$language}}</a>
+                <a class="dropdown-item" style="color: white;" href="{{ route('lang.switch', $lang) }}"> {{$language}}</a>
         @endif
     @endforeach
     </div>
-</li>
+</div>
+    <p>Copyright &copy; NAL 2021</p>
+</footer>
 </html>

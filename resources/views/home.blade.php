@@ -25,8 +25,6 @@
             </div>
             <style>
                 #list-category {
-
-                    height: calc(100vh - 55px - 37px - 5rem - 37px);
                     overflow-y: auto;
 
                     /* @media screen and (max-width: 768px) {} */
@@ -182,13 +180,13 @@
                                     <i class="fas fa-edit"></i>
                                 </a>
                                 <!-- delete button  -->
-                                <a class="text-danger ml-5 custom-link" data-toggle="modal" data-target="#delete-Modal">
+                                <a class="text-danger ml-5 custom-link" href="{{ route('delete-memo', ['id' => $memo->id]) }}">
                                     <i class="fas fa-trash"></i>
                                 </a>
                             </div>
                         </td>
                     </tr>
-                    {{-- Delete Modal --}}
+                    {{-- Delete Modal
                     <div class="modal fade custom-link" id="delete-Modal" tabindex="-1" role="dialog"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -210,7 +208,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     @endforeach
                 </tbody>
                 <tfoot>
@@ -370,7 +368,7 @@
                             <button style="min-width: 100px" type="submit" class="btn btn-primary">{{ __('update') }}</button>
                         </div>
                     </form>
-
+                    
                 </div>
             </div>
         </div>
